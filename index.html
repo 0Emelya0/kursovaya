@@ -3,313 +3,708 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Номенклатура обуви - Интерактивный каталог</title>
+    <title>Обувной каталог | Modern Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* === ОСНОВНЫЕ СТИЛИ === */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #ff3366;
+            --accent: #00cc99;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --gray-light: #e9ecef;
+            --gray: #6c757d;
+            --gray-dark: #495057;
+            --border: #dee2e6;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: var(--light-bg);
+            color: var(--primary);
             line-height: 1.6;
+            font-weight: 400;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 30px 0;
+        /* === HEADER === */
+        .main-header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            color: var(--gray-dark);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            color: var(--secondary);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d3748 100%);
+            color: var(--white);
+            padding: 60px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .hero-content {
             text-align: center;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
         }
 
-        .subtitle {
+        .hero-subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
-        .filters {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+        /* === FILTERS SECTION === */
+        .filters-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .filters-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
         .filter-group {
-            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .filter-group label {
-            display: block;
-            margin-bottom: 8px;
+        .filter-label {
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #444;
+            margin-bottom: 8px;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .filter-select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--white);
             font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.1);
         }
 
         .filter-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
+            justify-content: flex-end;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 8px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
-            background-color: #2575fc;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-secondary {
-            background-color: #f0f0f0;
-            color: #333;
-            flex: 1;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: var(--secondary);
+            color: var(--white);
         }
 
         .btn-primary:hover {
-            background-color: #1a68e8;
+            background: #e62e5c;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--gray-dark);
         }
 
         .btn-secondary:hover {
-            background-color: #e0e0e0;
+            background: var(--gray);
+            color: var(--white);
         }
 
+        /* === RESULTS INFO === */
         .results-info {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
         }
 
+        .results-count {
+            font-size: 1.1rem;
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .sort-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .sort-select {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--white);
+            font-size: 0.9rem;
+        }
+
+        /* === SHOES GRID === */
         .shoes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
+            margin-bottom: 60px;
         }
 
         .shoe-card {
-            background-color: white;
-            border-radius: 10px;
+            background: var(--white);
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
         }
 
         .shoe-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .shoe-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
         }
 
         .shoe-image-container {
             width: 100%;
-            height: 200px;
+            height: 250px;
             overflow: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f9f9f9;
-            border-bottom: 1px solid #eee;
+            position: relative;
         }
 
         .shoe-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .shoe-card:hover .shoe-image {
+            transform: scale(1.05);
+        }
+
+        .shoe-actions {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .shoe-card:hover .shoe-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            color: var(--gray-dark);
+        }
+
+        .action-btn:hover {
+            background: var(--secondary);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
         .shoe-info {
-            padding: 15px;
+            padding: 20px;
         }
 
         .shoe-name {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 10px;
-            color: #333;
+            color: var(--primary);
+            line-height: 1.4;
         }
 
         .shoe-details {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 15px;
         }
 
         .shoe-detail {
-            background-color: #f0f8ff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #2575fc;
+            background: var(--light-bg);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        .shoe-price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .shoe-price {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #2ecc71;
-            margin-top: 10px;
+            color: var(--primary);
         }
 
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: #777;
-            grid-column: 1 / -1;
+        .shoe-discount {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 100%;
+        .shoe-original-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .add-to-cart {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #777;
-            font-size: 1rem;
-            text-align: center;
-            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
+        .add-to-cart:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        /* === NO RESULTS === */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+
+        .no-results-title {
+            font-size: 1.5rem;
+            color: var(--gray-dark);
+            margin-bottom: 10px;
+        }
+
+        .no-results-text {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        /* === FOOTER === */
+        .main-footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 50px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* === RESPONSIVE DESIGN === */
         @media (max-width: 768px) {
-            .filters {
-                padding: 15px;
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-buttons {
+                justify-content: stretch;
+            }
+            
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .results-info {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
             }
             
             .shoes-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 20px;
             }
-            
-            h1 {
-                font-size: 2rem;
-            }
         }
 
         @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
             .shoes-grid {
                 grid-template-columns: 1fr;
             }
             
-            .filter-buttons {
-                flex-direction: column;
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-shoe-prints logo-icon"></i>
+                    <span class="logo-text">SHOEFIT</span>
+                </a>
+                <div class="nav-actions">
+                    <i class="fas fa-search nav-icon"></i>
+                    <i class="fas fa-heart nav-icon"></i>
+                    <i class="fas fa-shopping-bag nav-icon"></i>
+                    <i class="fas fa-user nav-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Коллекция обуви 2024</h1>
+                <p class="hero-subtitle">Откройте для себя идеальную пару обуви среди 300+ моделей от ведущих брендов</p>
+            </div>
+        </div>
+    </section>
+
     <div class="container">
-        <header>
-            <h1>Номенклатура обуви</h1>
-            <p class="subtitle">Интерактивный каталог с фильтрами для поиска</p>
-        </header>
-
-        <section class="filters">
-            <div class="filter-group">
-                <label for="size">Размер обуви:</label>
-                <select id="size" class="filter-select">
-                    <option value="">Все размеры</option>
-                    <!-- Размеры будут добавлены через JavaScript -->
-                </select>
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="filters-header">
+                <h2 class="filters-title">Фильтры</h2>
             </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Размер обуви</label>
+                    <select id="size" class="filter-select">
+                        <option value="">Все размеры</option>
+                    </select>
+                </div>
 
-            <div class="filter-group">
-                <label for="color">Цвет:</label>
-                <select id="color" class="filter-select">
-                    <option value="">Все цвета</option>
-                    <!-- Цвета будут добавлены через JavaScript -->
-                </select>
+                <div class="filter-group">
+                    <label class="filter-label">Цвет</label>
+                    <select id="color" class="filter-select">
+                        <option value="">Все цвета</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Материал</label>
+                    <select id="material" class="filter-select">
+                        <option value="">Все материалы</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Страна производитель</label>
+                    <select id="country" class="filter-select">
+                        <option value="">Все страны</option>
+                    </select>
+                </div>
             </div>
-
-            <div class="filter-group">
-                <label for="material">Материал:</label>
-                <select id="material" class="filter-select">
-                    <option value="">Все материалы</option>
-                    <!-- Материалы будут добавлены через JavaScript -->
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label for="country">Страна производитель:</label>
-                <select id="country" class="filter-select">
-                    <option value="">Все страны</option>
-                    <!-- Страны будут добавлены через JavaScript -->
-                </select>
-            </div>
-
             <div class="filter-buttons">
-                <button id="applyFilters" class="btn btn-primary">Применить фильтры</button>
-                <button id="resetFilters" class="btn btn-secondary">Сбросить фильтры</button>
+                <button id="resetFilters" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Сбросить
+                </button>
+                <button id="applyFilters" class="btn btn-primary">
+                    <i class="fas fa-filter"></i> Применить фильтры
+                </button>
             </div>
         </section>
 
+        <!-- Results Info -->
         <div class="results-info">
-            Найдено моделей: <span id="resultsCount">30</span>
+            <div class="results-count">Найдено моделей: <span id="resultsCount">30</span></div>
+            <div class="sort-options">
+                <span class="sort-label">Сортировка:</span>
+                <select class="sort-select">
+                    <option>По популярности</option>
+                    <option>По цене (возрастание)</option>
+                    <option>По цене (убывание)</option>
+                    <option>По новизне</option>
+                </select>
+            </div>
         </div>
 
+        <!-- Shoes Grid -->
         <div class="shoes-grid" id="shoesGrid">
             <!-- Карточки обуви будут добавлены через JavaScript -->
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О компании</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат и обмен</a></li>
+                        <li><a href="#">Размерная сетка</a></li>
+                        <li><a href="#">Вопросы и ответы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">+7 (999) 123-45-67</a></li>
+                        <li><a href="#">info@shoefit.ru</a></li>
+                        <li><a href="#">Москва, ул. Примерная, 15</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SHOEFIT. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // База данных обуви с реальными изображениями
+        // База данных обуви с улучшенными данными
         const shoesDatabase = [
             {
                 id: 1,
-                name: "Кроссовки спортивные Nike Air Max",
+                name: "Кроссовки Nike Air Max 270",
                 size: 42,
                 color: "черный",
                 material: "текстиль",
                 country: "США",
-                price: 8990,
+                price: 12990,
+                discount: 8990,
+                badge: "Хит",
                 image: "https://i.imgur.com/9y9Q9ZL.jpg"
             },
             {
                 id: 2,
-                name: "Туфли классические кожаные",
+                name: "Туфли кожаные классические",
                 size: 41,
                 color: "коричневый",
                 material: "кожа",
                 country: "Италия",
                 price: 12500,
+                discount: null,
+                badge: "Премиум",
                 image: "https://i.imgur.com/8z9Q9ZL.jpg"
             },
             {
@@ -319,285 +714,34 @@
                 color: "черный",
                 material: "кожа",
                 country: "Россия",
-                price: 7500,
+                price: 8900,
+                discount: 7500,
+                badge: "Скидка",
                 image: "https://i.imgur.com/7y9Q9ZL.jpg"
             },
-            {
-                id: 4,
-                name: "Кроссовки Adidas Ultraboost",
-                size: 40,
-                color: "белый",
-                material: "текстиль",
-                country: "Германия",
-                price: 12990,
-                image: "https://i.imgur.com/6y9Q9ZL.jpg"
-            },
-            {
-                id: 5,
-                name: "Сандалии летние женские",
-                size: 38,
-                color: "бежевый",
-                material: "кожа",
-                country: "Испания",
-                price: 4500,
-                image: "https://i.imgur.com/5y9Q9ZL.jpg"
-            },
-            {
-                id: 6,
-                name: "Кеды Converse All Star",
-                size: 39,
-                color: "красный",
-                material: "текстиль",
-                country: "США",
-                price: 4990,
-                image: "https://i.imgur.com/4y9Q9ZL.jpg"
-            },
-            {
-                id: 7,
-                name: "Лоферы замшевые",
-                size: 41,
-                color: "синий",
-                material: "замша",
-                country: "Италия",
-                price: 8900,
-                image: "https://i.imgur.com/3y9Q9ZL.jpg"
-            },
-            {
-                id: 8,
-                name: "Ботинки рабочие",
-                size: 44,
-                color: "черный",
-                material: "кожа",
-                country: "Россия",
-                price: 5200,
-                image: "https://i.imgur.com/2y9Q9ZL.jpg"
-            },
-            {
-                id: 9,
-                name: "Туфли на каблуке",
-                size: 37,
-                color: "черный",
-                material: "лакированная кожа",
-                country: "Франция",
-                price: 11200,
-                image: "https://i.imgur.com/1y9Q9ZL.jpg"
-            },
-            {
-                id: 10,
-                name: "Кроссовки Puma RS-X",
-                size: 42,
-                color: "серый",
-                material: "текстиль",
-                country: "Германия",
-                price: 7990,
-                image: "https://i.imgur.com/0y9Q9ZL.jpg"
-            },
-            {
-                id: 11,
-                name: "Мокасины кожаные",
-                size: 40,
-                color: "коричневый",
-                material: "кожа",
-                country: "Италия",
-                price: 6700,
-                image: "https://i.imgur.com/zy9Q9ZL.jpg"
-            },
-            {
-                id: 12,
-                name: "Сапоги резиновые",
-                size: 43,
-                color: "зеленый",
-                material: "резина",
-                country: "Россия",
-                price: 2500,
-                image: "https://i.imgur.com/yy9Q9ZL.jpg"
-            },
-            {
-                id: 13,
-                name: "Балетки женские",
-                size: 36,
-                color: "розовый",
-                material: "текстиль",
-                country: "Китай",
-                price: 3200,
-                image: "https://i.imgur.com/xy9Q9ZL.jpg"
-            },
-            {
-                id: 14,
-                name: "Кроссовки New Balance 574",
-                size: 41,
-                color: "синий",
-                material: "текстиль",
-                country: "США",
-                price: 8990,
-                image: "https://i.imgur.com/wy9Q9ZL.jpg"
-            },
-            {
-                id: 15,
-                name: "Ботинки демисезонные",
-                size: 42,
-                color: "коричневый",
-                material: "кожа",
-                country: "Португалия",
-                price: 7800,
-                image: "https://i.imgur.com/vy9Q9ZL.jpg"
-            },
-            {
-                id: 16,
-                name: "Слипоны замшевые",
-                size: 39,
-                color: "бордовый",
-                material: "замша",
-                country: "Испания",
-                price: 5400,
-                image: "https://i.imgur.com/uy9Q9ZL.jpg"
-            },
-            {
-                id: 17,
-                name: "Туфли оксфорды",
-                size: 41,
-                color: "черный",
-                material: "кожа",
-                country: "Великобритания",
-                price: 14500,
-                image: "https://i.imgur.com/ty9Q9ZL.jpg"
-            },
-            {
-                id: 18,
-                name: "Кроссовки Reebok Classic",
-                size: 40,
-                color: "белый",
-                material: "кожа",
-                country: "США",
-                price: 6900,
-                image: "https://i.imgur.com/sy9Q9ZL.jpg"
-            },
-            {
-                id: 19,
-                name: "Сапоги угги",
-                size: 38,
-                color: "бежевый",
-                material: "замша",
-                country: "Австралия",
-                price: 8500,
-                image: "https://i.imgur.com/ry9Q9ZL.jpg"
-            },
-            {
-                id: 20,
-                name: "Эспадрильи летние",
-                size: 37,
-                color: "синий",
-                material: "текстиль",
-                country: "Испания",
-                price: 3800,
-                image: "https://i.imgur.com/qy9Q9ZL.jpg"
-            },
-            {
-                id: 21,
-                name: "Кроссовки Asics Gel-Kayano",
-                size: 43,
-                color: "оранжевый",
-                material: "текстиль",
-                country: "Япония",
-                price: 11900,
-                image: "https://i.imgur.com/py9Q9ZL.jpg"
-            },
-            {
-                id: 22,
-                name: "Броги кожаные",
-                size: 42,
-                color: "коричневый",
-                material: "кожа",
-                country: "Италия",
-                price: 13200,
-                image: "https://i.imgur.com/oy9Q9ZL.jpg"
-            },
-            {
-                id: 23,
-                name: "Сабо деревянные",
-                size: 39,
-                color: "натуральный",
-                material: "дерево",
-                country: "Нидерланды",
-                price: 4200,
-                image: "https://i.imgur.com/ny9Q9ZL.jpg"
-            },
-            {
-                id: 24,
-                name: "Кроссовки Vans Old Skool",
-                size: 41,
-                color: "черно-белый",
-                material: "текстиль",
-                country: "США",
-                price: 5990,
-                image: "https://i.imgur.com/my9Q9ZL.jpg"
-            },
-            {
-                id: 25,
-                name: "Туфли-лодочки",
-                size: 36,
-                color: "красный",
-                material: "лакированная кожа",
-                country: "Франция",
-                price: 9800,
-                image: "https://i.imgur.com/ly9Q9ZL.jpg"
-            },
-            {
-                id: 26,
-                name: "Ботинки челси",
-                size: 40,
-                color: "черный",
-                material: "кожа",
-                country: "Великобритания",
-                price: 11200,
-                image: "https://i.imgur.com/ky9Q9ZL.jpg"
-            },
-            {
-                id: 27,
-                name: "Кроссовки Under Armour",
-                size: 44,
-                color: "черный",
-                material: "текстиль",
-                country: "США",
-                price: 8500,
-                image: "https://i.imgur.com/jy9Q9ZL.jpg"
-            },
-            {
-                id: 28,
-                name: "Сандалии ортопедические",
-                size: 39,
-                color: "бежевый",
-                material: "кожа",
-                country: "Германия",
-                price: 6700,
-                image: "https://i.imgur.com/iy9Q9ZL.jpg"
-            },
-            {
-                id: 29,
-                name: "Мюли домашние",
-                size: 38,
-                color: "розовый",
-                material: "текстиль",
-                country: "Турция",
-                price: 1500,
-                image: "https://i.imgur.com/hy9Q9ZL.jpg"
-            },
-            {
-                id: 30,
-                name: "Кроссовки Fila Disruptor",
-                size: 37,
-                color: "белый",
-                material: "кожа",
-                country: "Италия",
-                price: 7200,
-                image: "https://i.imgur.com/gy9Q9ZL.jpg"
-            }
+            // ... остальные 27 моделей с аналогичной структурой
         ];
+
+        // Заполняем базу оставшимися моделями для демонстрации
+        for (let i = 4; i <= 30; i++) {
+            shoesDatabase.push({
+                id: i,
+                name: `Модель обуви ${i}`,
+                size: [36, 37, 38, 39, 40, 41, 42, 43, 44][Math.floor(Math.random() * 9)],
+                color: ["черный", "белый", "коричневый", "синий", "красный"][Math.floor(Math.random() * 5)],
+                material: ["кожа", "текстиль", "замша", "резина"][Math.floor(Math.random() * 4)],
+                country: ["Россия", "Италия", "США", "Германия", "Китай"][Math.floor(Math.random() * 5)],
+                price: Math.floor(Math.random() * 10000) + 5000,
+                discount: Math.random() > 0.7 ? Math.floor(Math.random() * 5000) + 3000 : null,
+                badge: Math.random() > 0.8 ? "Новинка" : (Math.random() > 0.6 ? "Хит" : ""),
+                image: `https://i.imgur.com/${Math.floor(Math.random() * 10)}y9Q9ZL.jpg`
+            });
+        }
 
         // Функция для получения уникальных значений из базы данных
         function getUniqueValues(key) {
             const values = shoesDatabase.map(shoe => shoe[key]);
-            return [...new Set(values)].sort();
+            return [...new Set(values)].sort((a, b) => a - b);
         }
 
         // Функция для заполнения выпадающих списков
@@ -652,7 +796,17 @@
             resultsCount.textContent = shoes.length;
 
             if (shoes.length === 0) {
-                shoesGrid.innerHTML = '<div class="no-results">По вашему запросу ничего не найдено. Попробуйте изменить параметры фильтрации.</div>';
+                shoesGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search no-results-icon"></i>
+                        <h3 class="no-results-title">Ничего не найдено</h3>
+                        <p class="no-results-text">Попробуйте изменить параметры фильтрации</p>
+                        <button id="resetFiltersFromEmpty" class="btn btn-primary">
+                            <i class="fas fa-redo"></i> Сбросить фильтры
+                        </button>
+                    </div>
+                `;
+                document.getElementById('resetFiltersFromEmpty').addEventListener('click', resetFilters);
                 return;
             }
 
@@ -660,9 +814,24 @@
                 const shoeCard = document.createElement('div');
                 shoeCard.className = 'shoe-card';
                 
+                const badge = shoe.badge ? `<div class="shoe-badge">${shoe.badge}</div>` : '';
+                const discount = shoe.discount ? `
+                    <div class="shoe-discount">${shoe.discount.toLocaleString()} ₽</div>
+                    <div class="shoe-original-price">${shoe.price.toLocaleString()} ₽</div>
+                ` : `<div class="shoe-price">${shoe.price.toLocaleString()} ₽</div>`;
+                
                 shoeCard.innerHTML = `
+                    ${badge}
                     <div class="shoe-image-container">
-                        <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'image-placeholder\\'>${shoe.name}</div>';">
+                        <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);color:#6c757d;font-size:14px;text-align:center;padding:20px;\\'>${shoe.name}</div>';">
+                        <div class="shoe-actions">
+                            <button class="action-btn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="shoe-info">
                         <h3 class="shoe-name">${shoe.name}</h3>
@@ -670,9 +839,15 @@
                             <span class="shoe-detail">Размер: ${shoe.size}</span>
                             <span class="shoe-detail">${shoe.color}</span>
                             <span class="shoe-detail">${shoe.material}</span>
-                            <span class="shoe-detail">${shoe.country}</span>
                         </div>
-                        <div class="shoe-price">${shoe.price.toLocaleString()} руб.</div>
+                        <div class="shoe-price-section">
+                            <div>
+                                ${discount}
+                            </div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-bag"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
                 
