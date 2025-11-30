@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обувной каталог | Modern Collection</title>
+    <title>Каталог обуви | Номенклатура</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -14,13 +14,11 @@
             <div class="header-content">
                 <a href="#" class="logo">
                     <i class="fas fa-shoe-prints logo-icon"></i>
-                    <span class="logo-text">SHOEFIT</span>
+                    <span class="logo-text">ОБУВЬ</span>
                 </a>
                 <div class="nav-actions">
                     <i class="fas fa-search nav-icon"></i>
                     <i class="fas fa-heart nav-icon"></i>
-                    <i class="fas fa-shopping-bag nav-icon"></i>
-                    <i class="fas fa-user nav-icon"></i>
                 </div>
             </div>
         </div>
@@ -30,8 +28,8 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Коллекция обуви 2024</h1>
-                <p class="hero-subtitle">Откройте для себя идеальную пару обуви среди 300+ моделей от ведущих брендов</p>
+                <h1 class="hero-title">Каталог обуви</h1>
+                <p class="hero-subtitle">Исследуйте нашу коллекцию обуви с удобной системой фильтрации</p>
             </div>
         </div>
     </section>
@@ -40,7 +38,7 @@
         <!-- Filters Section -->
         <section class="filters-section">
             <div class="filters-header">
-                <h2 class="filters-title">Фильтры</h2>
+                <h2 class="filters-title">Фильтры поиска</h2>
             </div>
             <div class="filters-grid">
                 <div class="filter-group">
@@ -84,15 +82,6 @@
         <!-- Results Info -->
         <div class="results-info">
             <div class="results-count">Найдено моделей: <span id="resultsCount">0</span></div>
-            <div class="sort-options">
-                <span class="sort-label">Сортировка:</span>
-                <select class="sort-select">
-                    <option>По популярности</option>
-                    <option>По цене (возрастание)</option>
-                    <option>По цене (убывание)</option>
-                    <option>По новизне</option>
-                </select>
-            </div>
         </div>
 
         <!-- Shoes Grid -->
@@ -104,11 +93,8 @@
     <!-- Footer -->
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <!-- Убраны все колонки с ссылками -->
-            </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Каталог обуви. Все права защищены.</p>
+                <p>&copy; 2024 Каталог обуви. Учебный проект.</p>
             </div>
         </div>
     </footer>
@@ -215,6 +201,56 @@
                 country: "Германия",
                 badge: "Хит",
                 image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%23888' d='M55,85 L145,85 L140,155 L60,155 Z'/%3E%3Cpath fill='%23666' d='M65,85 L135,85 L132,145 L68,145 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='120' text-anchor='middle'%3EPuma%3C/text%3E%3C/svg%3E"
+            },
+            {
+                id: 11,
+                name: "Мокасины кожаные",
+                size: 40,
+                color: "коричневый",
+                material: "кожа",
+                country: "Италия",
+                badge: "Скидка",
+                image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%238B4513' d='M60,95 L140,95 L135,165 L65,165 Z'/%3E%3Cpath fill='%23A0522D' d='M75,95 L125,95 L122,145 L78,145 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='130' text-anchor='middle'%3EМокасины%3C/text%3E%3C/svg%3E"
+            },
+            {
+                id: 12,
+                name: "Сапоги резиновые",
+                size: 43,
+                color: "зеленый",
+                material: "резина",
+                country: "Россия",
+                badge: "Эконом",
+                image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%23008000' d='M50,60 L150,60 L145,170 L55,170 Z'/%3E%3Cpath fill='%23006000' d='M55,60 L145,60 L142,160 L58,160 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='135' text-anchor='middle'%3EРезиновые%3C/text%3E%3C/svg%3E"
+            },
+            {
+                id: 13,
+                name: "Балетки женские",
+                size: 36,
+                color: "розовый",
+                material: "текстиль",
+                country: "Китай",
+                badge: "Скидка",
+                image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%23FFB6C1' d='M70,110 L130,110 L125,160 L75,160 Z'/%3E%3Cpath fill='%23FF69B4' d='M80,110 L120,110 L118,150 L82,150 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='140' text-anchor='middle'%3EБалетки%3C/text%3E%3C/svg%3E"
+            },
+            {
+                id: 14,
+                name: "Кроссовки New Balance 574",
+                size: 41,
+                color: "синий",
+                material: "текстиль",
+                country: "США",
+                badge: "Хит",
+                image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%230000ff' d='M55,85 L145,85 L140,155 L60,155 Z'/%3E%3Cpath fill='%230000cc' d='M65,85 L135,85 L132,145 L68,145 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='120' text-anchor='middle'%3ENew Balance%3C/text%3E%3C/svg%3E"
+            },
+            {
+                id: 15,
+                name: "Ботинки демисезонные",
+                size: 42,
+                color: "коричневый",
+                material: "кожа",
+                country: "Португалия",
+                badge: "Скидка",
+                image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%238B4513' d='M50,75 L150,75 L145,165 L55,165 Z'/%3E%3Cpath fill='%23592c0c' d='M60,75 L140,75 L138,155 L62,155 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='125' text-anchor='middle'%3EДемисезонные%3C/text%3E%3C/svg%3E"
             }
         ];
 
@@ -226,12 +262,20 @@
 
         // Функция для заполнения выпадающих списков
         function populateFilters() {
-            console.log('Заполнение фильтров...');
-            
-            // Размеры
+            // Получаем элементы select
             const sizeSelect = document.getElementById('size');
+            const colorSelect = document.getElementById('color');
+            const materialSelect = document.getElementById('material');
+            const countrySelect = document.getElementById('country');
+            
+            // Проверяем, что элементы существуют
+            if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+                console.error('Один или несколько элементов select не найдены в DOM');
+                return;
+            }
+
+            // Размеры
             const sizes = getUniqueValues('size');
-            console.log('Размеры:', sizes);
             sizes.forEach(size => {
                 const option = document.createElement('option');
                 option.value = size;
@@ -240,9 +284,7 @@
             });
 
             // Цвета
-            const colorSelect = document.getElementById('color');
             const colors = getUniqueValues('color');
-            console.log('Цвета:', colors);
             colors.forEach(color => {
                 const option = document.createElement('option');
                 option.value = color;
@@ -251,9 +293,7 @@
             });
 
             // Материалы
-            const materialSelect = document.getElementById('material');
             const materials = getUniqueValues('material');
-            console.log('Материалы:', materials);
             materials.forEach(material => {
                 const option = document.createElement('option');
                 option.value = material;
@@ -262,9 +302,7 @@
             });
 
             // Страны
-            const countrySelect = document.getElementById('country');
             const countries = getUniqueValues('country');
-            console.log('Страны:', countries);
             countries.forEach(country => {
                 const option = document.createElement('option');
                 option.value = country;
@@ -275,16 +313,19 @@
 
         // Функция для отображения обуви
         function displayShoes(shoes) {
-            console.log('Отображение обуви:', shoes.length, 'моделей');
-            
             const shoesGrid = document.getElementById('shoesGrid');
             const resultsCount = document.getElementById('resultsCount');
+            
+            // Проверяем, что элементы существуют
+            if (!shoesGrid || !resultsCount) {
+                console.error('Элементы shoesGrid или resultsCount не найдены в DOM');
+                return;
+            }
             
             shoesGrid.innerHTML = '';
             resultsCount.textContent = shoes.length;
 
             if (shoes.length === 0) {
-                console.log('Нет результатов для отображения');
                 shoesGrid.innerHTML = `
                     <div class="no-results">
                         <i class="fas fa-search no-results-icon"></i>
@@ -331,25 +372,25 @@
                 
                 shoesGrid.appendChild(shoeCard);
             });
-            
-            console.log('Карточки успешно созданы');
         }
 
         // Функция для применения фильтров
         function applyFilters() {
-            console.log('Применение фильтров...');
+            const sizeSelect = document.getElementById('size');
+            const colorSelect = document.getElementById('color');
+            const materialSelect = document.getElementById('material');
+            const countrySelect = document.getElementById('country');
             
-            const selectedSize = document.getElementById('size').value;
-            const selectedColor = document.getElementById('color').value;
-            const selectedMaterial = document.getElementById('material').value;
-            const selectedCountry = document.getElementById('country').value;
-
-            console.log('Выбранные фильтры:', {
-                size: selectedSize,
-                color: selectedColor,
-                material: selectedMaterial,
-                country: selectedCountry
-            });
+            // Проверяем, что элементы существуют
+            if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+                console.error('Один или несколько элементов select не найдены в DOM');
+                return;
+            }
+            
+            const selectedSize = sizeSelect.value;
+            const selectedColor = colorSelect.value;
+            const selectedMaterial = materialSelect.value;
+            const selectedCountry = countrySelect.value;
 
             const filteredShoes = shoesDatabase.filter(shoe => {
                 return (!selectedSize || shoe.size == selectedSize) &&
@@ -358,33 +399,57 @@
                        (!selectedCountry || shoe.country === selectedCountry);
             });
 
-            console.log('Отфильтрованные модели:', filteredShoes);
             displayShoes(filteredShoes);
         }
 
         // Функция для сброса фильтров
         function resetFilters() {
-            console.log('Сброс фильтров...');
+            const sizeSelect = document.getElementById('size');
+            const colorSelect = document.getElementById('color');
+            const materialSelect = document.getElementById('material');
+            const countrySelect = document.getElementById('country');
             
-            document.getElementById('size').value = '';
-            document.getElementById('color').value = '';
-            document.getElementById('material').value = '';
-            document.getElementById('country').value = '';
+            // Проверяем, что элементы существуют
+            if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+                console.error('Один или несколько элементов select не найдены в DOM');
+                return;
+            }
+            
+            sizeSelect.value = '';
+            colorSelect.value = '';
+            materialSelect.value = '';
+            countrySelect.value = '';
             
             displayShoes(shoesDatabase);
         }
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM загружен, инициализация...');
+            // Проверяем существование основных элементов
+            const mainElements = [
+                'size', 'color', 'material', 'country', 
+                'shoesGrid', 'resultsCount', 'applyFilters', 'resetFilters'
+            ];
+            
+            let allElementsExist = true;
+            mainElements.forEach(elementId => {
+                const element = document.getElementById(elementId);
+                if (!element) {
+                    console.error(`Элемент с id "${elementId}" не найден в DOM`);
+                    allElementsExist = false;
+                }
+            });
+            
+            if (!allElementsExist) {
+                console.error('Не все необходимые элементы найдены в DOM');
+                return;
+            }
             
             populateFilters();
             displayShoes(shoesDatabase);
             
             document.getElementById('applyFilters').addEventListener('click', applyFilters);
             document.getElementById('resetFilters').addEventListener('click', resetFilters);
-            
-            console.log('Инициализация завершена');
         });
     </script>
 </body>
