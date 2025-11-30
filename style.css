@@ -384,8 +384,6 @@ body {
     border: 1px solid var(--border);
 }
 
-/* Убрана секция с ценой и кнопкой покупки */
-
 /* === NO RESULTS === */
 .no-results {
     text-align: center;
@@ -417,45 +415,20 @@ body {
 .main-footer {
     background: var(--primary);
     color: var(--white);
-    padding: 50px 0 30px;
+    padding: 30px 0 20px;
     margin-top: 60px;
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-column h3 {
-    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
-    font-weight: 600;
-    color: var(--white);
-}
-
-.footer-links {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 12px;
-}
-
-.footer-links a {
-    color: #cccccc;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-links a:hover {
-    color: var(--white);
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 20px;
     border-top: 1px solid #333333;
     color: #999999;
     font-size: 0.9rem;
@@ -508,10 +481,5 @@ body {
     
     .shoes-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
     }
 }
