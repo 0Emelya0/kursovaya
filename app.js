@@ -172,11 +172,11 @@ function displayShoes(shoes) {
     if (shoes.length === 0) {
         shoesGrid.innerHTML = `
             <div class="no-results">
-                <i class="fas fa-search no-results-icon"></i>
+                <div class="no-results-icon">📦</div>
                 <h3 class="no-results-title">Ничего не найдено</h3>
                 <p class="no-results-text">Попробуйте изменить параметры фильтрации</p>
                 <button id="resetFiltersFromEmpty" class="btn btn-primary">
-                    <i class="fas fa-redo"></i> Сбросить фильтры
+                    Сбросить фильтры
                 </button>
             </div>
         `;
@@ -194,14 +194,6 @@ function displayShoes(shoes) {
             ${badge}
             <div class="shoe-image-container">
                 <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'%3E%3Crect fill=\'%23f5f5f5\' width=\'200\' height=\'200\'/%3E%3Ctext fill=\'%23999\' font-family=\'Arial\' font-size=\'14\' x=\'100\' y=\'100\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(shoe.name)}%3C/text%3E%3C/svg%3E'">
-                <div class="shoe-actions">
-                    <button class="action-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-arrows-alt-h"></i>
-                    </button>
-                </div>
             </div>
             <div class="shoe-info">
                 <h3 class="shoe-name">${shoe.name}</h3>
@@ -303,10 +295,10 @@ function toggleFormVisibility() {
     
     if (formSection.style.display === 'none') {
         formSection.style.display = 'block';
-        toggleBtn.innerHTML = '<i class="fas fa-minus"></i> Скрыть форму добавления';
+        toggleBtn.textContent = 'Скрыть форму добавления';
     } else {
         formSection.style.display = 'none';
-        toggleBtn.innerHTML = '<i class="fas fa-plus"></i> Добавить новую обувь';
+        toggleBtn.textContent = 'Добавить новую обувь';
     }
 }
 
