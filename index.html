@@ -3,176 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог обуви | Номенклатура</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Converse All Star - Интернет-магазин</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .product-card {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+        
+        .product-image {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        }
+        
+        .product-info {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .product-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .product-details {
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            width: 120px;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #222;
+        }
+        
+        .size-badge {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .color-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #000;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .material-badge {
+            display: inline-block;
+            background: #e9ecef;
+            color: #495057;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        
+        .country-flag {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(to bottom, #da251d 50%, #ff0 50%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        
+        .price-section {
+            margin: 25px 0;
+        }
+        
+        .price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-features {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .features-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .features-list {
+            list-style-type: none;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .product-card {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                padding: 20px;
+            }
+            
+            .product-info {
+                padding: 25px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <i class="fas fa-shoe-prints logo-icon"></i>
-                    <span class="logo-text">ОБУВЬ</span>
-                </a>
-                <div class="nav-actions">
-                    <i class="fas fa-search nav-icon"></i>
-                    <i class="fas fa-heart nav-icon"></i>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Каталог обуви</h1>
-                <p class="hero-subtitle">Исследуйте нашу коллекцию обуви с удобной системой фильтрации</p>
-            </div>
-        </div>
-    </section>
-
     <div class="container">
-        <!-- Toggle Form Button -->
-        <div class="toggle-form-container">
-            <button id="toggleFormBtn" class="toggle-form-btn">
-                <i class="fas fa-plus"></i> Добавить новую обувь
-            </button>
-        </div>
-
-        <!-- Add Shoe Form Section -->
-        <section class="add-shoe-section" id="addShoeSection" style="display: none;">
-            <div class="add-shoe-form">
-                <h2 class="form-title">Добавить новую обувь</h2>
-                <form id="addShoeForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="shoeName">Название обуви *</label>
-                            <input type="text" id="shoeName" name="name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="shoeSize">Размер *</label>
-                            <input type="number" id="shoeSize" name="size" min="35" max="50" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="shoeColor">Цвет *</label>
-                            <input type="text" id="shoeColor" name="color" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="shoeMaterial">Материал *</label>
-                            <select id="shoeMaterial" name="material" required>
-                                <option value="">Выберите материал</option>
-                                <option value="кожа">Кожа</option>
-                                <option value="текстиль">Текстиль</option>
-                                <option value="замша">Замша</option>
-                                <option value="резина">Резина</option>
-                                <option value="лакированная кожа">Лакированная кожа</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="shoeCountry">Страна производитель *</label>
-                            <input type="text" id="shoeCountry" name="country" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="shoeBadge">Бейдж</label>
-                            <select id="shoeBadge" name="badge">
-                                <option value="">Без бейджа</option>
-                                <option value="Хит">Хит</option>
-                                <option value="Новинка">Новинка</option>
-                                <option value="Скидка">Скидка</option>
-                                <option value="Премиум">Премиум</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label for="shoeImage">URL изображения *</label>
-                            <input type="url" id="shoeImage" name="image" placeholder="https://example.com/image.jpg" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-buttons">
-                        <button type="button" id="cancelForm" class="btn btn-secondary">Отмена</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Добавить обувь
-                        </button>
-                    </div>
-                </form>
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://i.imgur.com/9X8j6yE.png" alt="Converse All Star">
+            </div>
+            <div class="product-info">
+                <h1 class="product-title">Converse All Star</h1>
+                <p class="product-subtitle">Классические кеды</p>
                 
-                <div id="formMessage" class="form-message"></div>
-            </div>
-        </section>
-
-        <!-- Filters Section -->
-        <section class="filters-section">
-            <div class="filters-header">
-                <h2 class="filters-title">Фильтры поиска</h2>
-            </div>
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Размер обуви</label>
-                    <select id="size" class="filter-select">
-                        <option value="">Все размеры</option>
-                    </select>
+                <div class="product-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Размер:</span>
+                        <span class="detail-value"><span class="size-badge">44</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Цвет:</span>
+                        <span class="detail-value">
+                            <span class="color-indicator"></span>
+                            Чёрный
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Материал:</span>
+                        <span class="detail-value">
+                            <span class="material-badge">Текстиль</span>
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Страна:</span>
+                        <span class="detail-value">
+                            Вьетнам
+                            <span class="country-flag">VN</span>
+                        </span>
+                    </div>
                 </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Цвет</label>
-                    <select id="color" class="filter-select">
-                        <option value="">Все цвета</option>
-                    </select>
+                
+                <div class="price-section">
+                    <div class="price">5 490 ₽</div>
                 </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Материал</label>
-                    <select id="material" class="filter-select">
-                        <option value="">Все материалы</option>
-                    </select>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary">Добавить в корзину</button>
+                    <button class="btn btn-secondary">Купить сейчас</button>
                 </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Страна производитель</label>
-                    <select id="country" class="filter-select">
-                        <option value="">Все страны</option>
-                    </select>
+                
+                <div class="product-features">
+                    <h3 class="features-title">Особенности:</h3>
+                    <ul class="features-list">
+                        <li>Классический дизайн</li>
+                        <li>Удобная текстильная подошва</li>
+                        <li>Резиновая подошва для лучшего сцепления</li>
+                        <li>Подходит для повседневной носки</li>
+                    </ul>
                 </div>
             </div>
-            <div class="filter-buttons">
-                <button id="resetFilters" class="btn btn-secondary">
-                    <i class="fas fa-redo"></i> Сбросить
-                </button>
-                <button id="applyFilters" class="btn btn-primary">
-                    <i class="fas fa-filter"></i> Применить фильтры
-                </button>
-            </div>
-        </section>
-
-        <!-- Results Info -->
-        <div class="results-info">
-            <div class="results-count">Найдено моделей: <span id="resultsCount">0</span></div>
-        </div>
-
-        <!-- Shoes Grid -->
-        <div class="shoes-grid" id="shoesGrid">
-            <!-- Карточки обуви будут добавлены через JavaScript -->
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2024 Каталог обуви. Учебный проект.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script type="module" src="app.js"></script>
 </body>
 </html>
