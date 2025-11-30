@@ -1,574 +1,447 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обувной каталог | Modern Collection</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <i class="fas fa-shoe-prints logo-icon"></i>
-                    <span class="logo-text">SHOEFIT</span>
-                </a>
-                <div class="nav-actions">
-                    <i class="fas fa-search nav-icon"></i>
-                    <i class="fas fa-heart nav-icon"></i>
-                    <i class="fas fa-shopping-bag nav-icon"></i>
-                    <i class="fas fa-user nav-icon"></i>
+<script>
+    // База данных обуви без цен
+    const shoesDatabase = [
+        {
+            id: 1,
+            name: "Кроссовки Nike Air Max 270",
+            size: 42,
+            color: "черный",
+            material: "текстиль",
+            country: "США",
+            badge: "Хит",
+            image: "https://i.imgur.com/9y9Q9ZL.jpg"
+        },
+        {
+            id: 2,
+            name: "Туфли кожаные классические",
+            size: 41,
+            color: "коричневый",
+            material: "кожа",
+            country: "Италия",
+            badge: "Премиум",
+            image: "https://i.imgur.com/8z9Q9ZL.jpg"
+        },
+        {
+            id: 3,
+            name: "Ботинки зимние утепленные",
+            size: 43,
+            color: "черный",
+            material: "кожа",
+            country: "Россия",
+            badge: "Скидка",
+            image: "https://i.imgur.com/7y9Q9ZL.jpg"
+        },
+        {
+            id: 4,
+            name: "Кроссовки Adidas Ultraboost",
+            size: 40,
+            color: "белый",
+            material: "текстиль",
+            country: "Германия",
+            badge: "Хит",
+            image: "https://i.imgur.com/6y9Q9ZL.jpg"
+        },
+        {
+            id: 5,
+            name: "Сандалии летние женские",
+            size: 38,
+            color: "бежевый",
+            material: "кожа",
+            country: "Испания",
+            badge: "Скидка",
+            image: "https://i.imgur.com/5y9Q9ZL.jpg"
+        },
+        {
+            id: 6,
+            name: "Кеды Converse All Star",
+            size: 39,
+            color: "красный",
+            material: "текстиль",
+            country: "США",
+            badge: "Классика",
+            image: "https://i.imgur.com/4y9Q9ZL.jpg"
+        },
+        {
+            id: 7,
+            name: "Лоферы замшевые",
+            size: 41,
+            color: "синий",
+            material: "замша",
+            country: "Италия",
+            badge: "Новинка",
+            image: "https://i.imgur.com/3y9Q9ZL.jpg"
+        },
+        {
+            id: 8,
+            name: "Ботинки рабочие",
+            size: 44,
+            color: "черный",
+            material: "кожа",
+            country: "Россия",
+            badge: "Скидка",
+            image: "https://i.imgur.com/2y9Q9ZL.jpg"
+        },
+        {
+            id: 9,
+            name: "Туфли на каблуке",
+            size: 37,
+            color: "черный",
+            material: "лакированная кожа",
+            country: "Франция",
+            badge: "Премиум",
+            image: "https://i.imgur.com/1y9Q9ZL.jpg"
+        },
+        {
+            id: 10,
+            name: "Кроссовки Puma RS-X",
+            size: 42,
+            color: "серый",
+            material: "текстиль",
+            country: "Германия",
+            badge: "Хит",
+            image: "https://i.imgur.com/0y9Q9ZL.jpg"
+        },
+        {
+            id: 11,
+            name: "Мокасины кожаные",
+            size: 40,
+            color: "коричневый",
+            material: "кожа",
+            country: "Италия",
+            badge: "Скидка",
+            image: "https://i.imgur.com/zy9Q9ZL.jpg"
+        },
+        {
+            id: 12,
+            name: "Сапоги резиновые",
+            size: 43,
+            color: "зеленый",
+            material: "резина",
+            country: "Россия",
+            badge: "Эконом",
+            image: "https://i.imgur.com/yy9Q9ZL.jpg"
+        },
+        {
+            id: 13,
+            name: "Балетки женские",
+            size: 36,
+            color: "розовый",
+            material: "текстиль",
+            country: "Китай",
+            badge: "Скидка",
+            image: "https://i.imgur.com/xy9Q9ZL.jpg"
+        },
+        {
+            id: 14,
+            name: "Кроссовки New Balance 574",
+            size: 41,
+            color: "синий",
+            material: "текстиль",
+            country: "США",
+            badge: "Хит",
+            image: "https://i.imgur.com/wy9Q9ZL.jpg"
+        },
+        {
+            id: 15,
+            name: "Ботинки демисезонные",
+            size: 42,
+            color: "коричневый",
+            material: "кожа",
+            country: "Португалия",
+            badge: "Скидка",
+            image: "https://i.imgur.com/vy9Q9ZL.jpg"
+        },
+        {
+            id: 16,
+            name: "Слипоны замшевые",
+            size: 39,
+            color: "бордовый",
+            material: "замша",
+            country: "Испания",
+            badge: "Новинка",
+            image: "https://i.imgur.com/uy9Q9ZL.jpg"
+        },
+        {
+            id: 17,
+            name: "Туфли оксфорды",
+            size: 41,
+            color: "черный",
+            material: "кожа",
+            country: "Великобритания",
+            badge: "Премиум",
+            image: "https://i.imgur.com/ty9Q9ZL.jpg"
+        },
+        {
+            id: 18,
+            name: "Кроссовки Reebok Classic",
+            size: 40,
+            color: "белый",
+            material: "кожа",
+            country: "США",
+            badge: "Скидка",
+            image: "https://i.imgur.com/sy9Q9ZL.jpg"
+        },
+        {
+            id: 19,
+            name: "Сапоги угги",
+            size: 38,
+            color: "бежевый",
+            material: "замша",
+            country: "Австралия",
+            badge: "Зима",
+            image: "https://i.imgur.com/ry9Q9ZL.jpg"
+        },
+        {
+            id: 20,
+            name: "Эспадрильи летние",
+            size: 37,
+            color: "синий",
+            material: "текстиль",
+            country: "Испания",
+            badge: "Лето",
+            image: "https://i.imgur.com/qy9Q9ZL.jpg"
+        },
+        {
+            id: 21,
+            name: "Кроссовки Asics Gel-Kayano",
+            size: 43,
+            color: "оранжевый",
+            material: "текстиль",
+            country: "Япония",
+            badge: "Спорт",
+            image: "https://i.imgur.com/py9Q9ZL.jpg"
+        },
+        {
+            id: 22,
+            name: "Броги кожаные",
+            size: 42,
+            color: "коричневый",
+            material: "кожа",
+            country: "Италия",
+            badge: "Премиум",
+            image: "https://i.imgur.com/oy9Q9ZL.jpg"
+        },
+        {
+            id: 23,
+            name: "Сабо деревянные",
+            size: 39,
+            color: "натуральный",
+            material: "дерево",
+            country: "Нидерланды",
+            badge: "Эко",
+            image: "https://i.imgur.com/ny9Q9ZL.jpg"
+        },
+        {
+            id: 24,
+            name: "Кроссовки Vans Old Skool",
+            size: 41,
+            color: "черно-белый",
+            material: "текстиль",
+            country: "США",
+            badge: "Хит",
+            image: "https://i.imgur.com/my9Q9ZL.jpg"
+        },
+        {
+            id: 25,
+            name: "Туфли-лодочки",
+            size: 36,
+            color: "красный",
+            material: "лакированная кожа",
+            country: "Франция",
+            badge: "Вечер",
+            image: "https://i.imgur.com/ly9Q9ZL.jpg"
+        },
+        {
+            id: 26,
+            name: "Ботинки челси",
+            size: 40,
+            color: "черный",
+            material: "кожа",
+            country: "Великобритания",
+            badge: "Классика",
+            image: "https://i.imgur.com/ky9Q9ZL.jpg"
+        },
+        {
+            id: 27,
+            name: "Кроссовки Under Armour",
+            size: 44,
+            color: "черный",
+            material: "текстиль",
+            country: "США",
+            badge: "Спорт",
+            image: "https://i.imgur.com/jy9Q9ZL.jpg"
+        },
+        {
+            id: 28,
+            name: "Сандалии ортопедические",
+            size: 39,
+            color: "бежевый",
+            material: "кожа",
+            country: "Германия",
+            badge: "Здоровье",
+            image: "https://i.imgur.com/iy9Q9ZL.jpg"
+        },
+        {
+            id: 29,
+            name: "Мюли домашние",
+            size: 38,
+            color: "розовый",
+            material: "текстиль",
+            country: "Турция",
+            badge: "Дом",
+            image: "https://i.imgur.com/hy9Q9ZL.jpg"
+        },
+        {
+            id: 30,
+            name: "Кроссовки Fila Disruptor",
+            size: 37,
+            color: "белый",
+            material: "кожа",
+            country: "Италия",
+            badge: "Ретро",
+            image: "https://i.imgur.com/gy9Q9ZL.jpg"
+        }
+    ];
+
+    // Функция для получения уникальных значений из базы данных
+    function getUniqueValues(key) {
+        const values = shoesDatabase.map(shoe => shoe[key]);
+        return [...new Set(values)].sort((a, b) => a - b);
+    }
+
+    // Функция для заполнения выпадающих списков
+    function populateFilters() {
+        // Размеры
+        const sizeSelect = document.getElementById('size');
+        const sizes = getUniqueValues('size');
+        sizes.forEach(size => {
+            const option = document.createElement('option');
+            option.value = size;
+            option.textContent = size;
+            sizeSelect.appendChild(option);
+        });
+
+        // Цвета
+        const colorSelect = document.getElementById('color');
+        const colors = getUniqueValues('color');
+        colors.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            option.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+            colorSelect.appendChild(option);
+        });
+
+        // Материалы
+        const materialSelect = document.getElementById('material');
+        const materials = getUniqueValues('material');
+        materials.forEach(material => {
+            const option = document.createElement('option');
+            option.value = material;
+            option.textContent = material.charAt(0).toUpperCase() + material.slice(1);
+            materialSelect.appendChild(option);
+        });
+
+        // Страны
+        const countrySelect = document.getElementById('country');
+        const countries = getUniqueValues('country');
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            countrySelect.appendChild(option);
+        });
+    }
+
+    // Функция для отображения обуви
+    function displayShoes(shoes) {
+        const shoesGrid = document.getElementById('shoesGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        
+        shoesGrid.innerHTML = '';
+        resultsCount.textContent = shoes.length;
+
+        if (shoes.length === 0) {
+            shoesGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search no-results-icon"></i>
+                    <h3 class="no-results-title">Ничего не найдено</h3>
+                    <p class="no-results-text">Попробуйте изменить параметры фильтрации</p>
+                    <button id="resetFiltersFromEmpty" class="btn btn-primary">
+                        <i class="fas fa-redo"></i> Сбросить фильтры
+                    </button>
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Коллекция обуви 2024</h1>
-                <p class="hero-subtitle">Откройте для себя идеальную пару обуви среди 300+ моделей от ведущих брендов</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <!-- Filters Section -->
-        <section class="filters-section">
-            <div class="filters-header">
-                <h2 class="filters-title">Фильтры</h2>
-            </div>
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Размер обуви</label>
-                    <select id="size" class="filter-select">
-                        <option value="">Все размеры</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Цвет</label>
-                    <select id="color" class="filter-select">
-                        <option value="">Все цвета</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Материал</label>
-                    <select id="material" class="filter-select">
-                        <option value="">Все материалы</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Страна производитель</label>
-                    <select id="country" class="filter-select">
-                        <option value="">Все страны</option>
-                    </select>
-                </div>
-            </div>
-            <div class="filter-buttons">
-                <button id="resetFilters" class="btn btn-secondary">
-                    <i class="fas fa-redo"></i> Сбросить
-                </button>
-                <button id="applyFilters" class="btn btn-primary">
-                    <i class="fas fa-filter"></i> Применить фильтры
-                </button>
-            </div>
-        </section>
-
-        <!-- Results Info -->
-        <div class="results-info">
-            <div class="results-count">Найдено моделей: <span id="resultsCount">30</span></div>
-            <div class="sort-options">
-                <span class="sort-label">Сортировка:</span>
-                <select class="sort-select">
-                    <option>По популярности</option>
-                    <option>По цене (возрастание)</option>
-                    <option>По цене (убывание)</option>
-                    <option>По новизне</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Shoes Grid -->
-        <div class="shoes-grid" id="shoesGrid">
-            <!-- Карточки обуви будут добавлены через JavaScript -->
-        </div>
-    </div>
-
-    <!-- Footer -->
-   <footer class="main-footer">
-    <div class="container">
-        <div class="footer-content">
-            <!-- Убраны все колонки с ссылками -->
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Каталог обуви.</p>
-        </div>
-    </div>
-</footer>
-
-    <script>
-        // База данных обуви с улучшенными данными
-        const shoesDatabase = [
-            {
-                id: 1,
-                name: "Кроссовки Nike Air Max 270",
-                size: 42,
-                color: "черный",
-                material: "текстиль",
-                country: "США",
-                badge: "Хит",
-                image: "https://i.imgur.com/9y9Q9ZL.jpg"
-            },
-            {
-                id: 2,
-                name: "Туфли кожаные классические",
-                size: 41,
-                color: "коричневый",
-                material: "кожа",
-                country: "Италия",
-                badge: "Премиум",
-                image: "https://i.imgur.com/8z9Q9ZL.jpg"
-            },
-            {
-                id: 3,
-                name: "Ботинки зимние утепленные",
-                size: 43,
-                color: "черный",
-                material: "кожа",
-                country: "Россия",
-                badge: "Скидка",
-                image: "https://i.imgur.com/7y9Q9ZL.jpg"
-            },
-            {
-                id: 4,
-                name: "Кроссовки Adidas Ultraboost",
-                size: 40,
-                color: "белый",
-                material: "текстиль",
-                country: "Германия",
-                badge: "Хит",
-                image: "https://i.imgur.com/6y9Q9ZL.jpg"
-            },
-            {
-                id: 5,
-                name: "Сандалии летние женские",
-                size: 38,
-                color: "бежевый",
-                material: "кожа",
-                country: "Испания",
-                badge: "Скидка",
-                image: "https://i.imgur.com/5y9Q9ZL.jpg"
-            },
-            {
-                id: 6,
-                name: "Кеды Converse All Star",
-                size: 39,
-                color: "красный",
-                material: "текстиль",
-                country: "США",
-                badge: "Классика",
-                image: "https://i.imgur.com/4y9Q9ZL.jpg"
-            },
-            {
-                id: 7,
-                name: "Лоферы замшевые",
-                size: 41,
-                color: "синий",
-                material: "замша",
-                country: "Италия",
-                badge: "Новинка",
-                image: "https://i.imgur.com/3y9Q9ZL.jpg"
-            },
-            {
-                id: 8,
-                name: "Ботинки рабочие",
-                size: 44,
-                color: "черный",
-                material: "кожа",
-                country: "Россия",
-                badge: "Скидка",
-                image: "https://i.imgur.com/2y9Q9ZL.jpg"
-            },
-            {
-                id: 9,
-                name: "Туфли на каблуке",
-                size: 37,
-                color: "черный",
-                material: "лакированная кожа",
-                country: "Франция",
-                badge: "Премиум",
-                image: "https://i.imgur.com/1y9Q9ZL.jpg"
-            },
-            {
-                id: 10,
-                name: "Кроссовки Puma RS-X",
-                size: 42,
-                color: "серый",
-                material: "текстиль",
-                country: "Германия",
-                badge: "Хит",
-                image: "https://i.imgur.com/0y9Q9ZL.jpg"
-            },
-            {
-                id: 11,
-                name: "Мокасины кожаные",
-                size: 40,
-                color: "коричневый",
-                material: "кожа",
-                country: "Италия",
-                badge: "Скидка",
-                image: "https://i.imgur.com/zy9Q9ZL.jpg"
-            },
-            {
-                id: 12,
-                name: "Сапоги резиновые",
-                size: 43,
-                color: "зеленый",
-                material: "резина",
-                country: "Россия",
-                badge: "Эконом",
-                image: "https://i.imgur.com/yy9Q9ZL.jpg"
-            },
-            {
-                id: 13,
-                name: "Балетки женские",
-                size: 36,
-                color: "розовый",
-                material: "текстиль",
-                country: "Китай",
-                badge: "Скидка",
-                image: "https://i.imgur.com/xy9Q9ZL.jpg"
-            },
-            {
-                id: 14,
-                name: "Кроссовки New Balance 574",
-                size: 41,
-                color: "синий",
-                material: "текстиль",
-                country: "США",
-                badge: "Хит",
-                image: "https://i.imgur.com/wy9Q9ZL.jpg"
-            },
-            {
-                id: 15,
-                name: "Ботинки демисезонные",
-                size: 42,
-                color: "коричневый",
-                material: "кожа",
-                country: "Португалия",
-                badge: "Скидка",
-                image: "https://i.imgur.com/vy9Q9ZL.jpg"
-            },
-            {
-                id: 16,
-                name: "Слипоны замшевые",
-                size: 39,
-                color: "бордовый",
-                material: "замша",
-                country: "Испания",
-                badge: "Новинка",
-                image: "https://i.imgur.com/uy9Q9ZL.jpg"
-            },
-            {
-                id: 17,
-                name: "Туфли оксфорды",
-                size: 41,
-                color: "черный",
-                material: "кожа",
-                country: "Великобритания",
-                badge: "Премиум",
-                image: "https://i.imgur.com/ty9Q9ZL.jpg"
-            },
-            {
-                id: 18,
-                name: "Кроссовки Reebok Classic",
-                size: 40,
-                color: "белый",
-                material: "кожа",
-                country: "США",
-                badge: "Скидка",
-                image: "https://i.imgur.com/sy9Q9ZL.jpg"
-            },
-            {
-                id: 19,
-                name: "Сапоги угги",
-                size: 38,
-                color: "бежевый",
-                material: "замша",
-                country: "Австралия",
-                badge: "Зима",
-                image: "https://i.imgur.com/ry9Q9ZL.jpg"
-            },
-            {
-                id: 20,
-                name: "Эспадрильи летние",
-                size: 37,
-                color: "синий",
-                material: "текстиль",
-                country: "Испания",
-                badge: "Лето",
-                image: "https://i.imgur.com/qy9Q9ZL.jpg"
-            },
-            {
-                id: 21,
-                name: "Кроссовки Asics Gel-Kayano",
-                size: 43,
-                color: "оранжевый",
-                material: "текстиль",
-                country: "Япония",
-                badge: "Спорт",
-                image: "https://i.imgur.com/py9Q9ZL.jpg"
-            },
-            {
-                id: 22,
-                name: "Броги кожаные",
-                size: 42,
-                color: "коричневый",
-                material: "кожа",
-                country: "Италия",
-                badge: "Премиум",
-                image: "https://i.imgur.com/oy9Q9ZL.jpg"
-            },
-            {
-                id: 23,
-                name: "Сабо деревянные",
-                size: 39,
-                color: "натуральный",
-                material: "дерево",
-                country: "Нидерланды",
-                badge: "Эко",
-                image: "https://i.imgur.com/ny9Q9ZL.jpg"
-            },
-            {
-                id: 24,
-                name: "Кроссовки Vans Old Skool",
-                size: 41,
-                color: "черно-белый",
-                material: "текстиль",
-                country: "США",
-                badge: "Хит",
-                image: "https://i.imgur.com/my9Q9ZL.jpg"
-            },
-            {
-                id: 25,
-                name: "Туфли-лодочки",
-                size: 36,
-                color: "красный",
-                material: "лакированная кожа",
-                country: "Франция",
-                badge: "Вечер",
-                image: "https://i.imgur.com/ly9Q9ZL.jpg"
-            },
-            {
-                id: 26,
-                name: "Ботинки челси",
-                size: 40,
-                color: "черный",
-                material: "кожа",
-                country: "Великобритания",
-                badge: "Классика",
-                image: "https://i.imgur.com/ky9Q9ZL.jpg"
-            },
-            {
-                id: 27,
-                name: "Кроссовки Under Armour",
-                size: 44,
-                color: "черный",
-                material: "текстиль",
-                country: "США",
-                badge: "Спорт",
-                image: "https://i.imgur.com/jy9Q9ZL.jpg"
-            },
-            {
-                id: 28,
-                name: "Сандалии ортопедические",
-                size: 39,
-                color: "бежевый",
-                material: "кожа",
-                country: "Германия",
-                badge: "Здоровье",
-                image: "https://i.imgur.com/iy9Q9ZL.jpg"
-            },
-            {
-                id: 29,
-                name: "Мюли домашние",
-                size: 38,
-                color: "розовый",
-                material: "текстиль",
-                country: "Турция",
-                badge: "Дом",
-                image: "https://i.imgur.com/hy9Q9ZL.jpg"
-            },
-            {
-                id: 30,
-                name: "Кроссовки Fila Disruptor",
-                size: 37,
-                color: "белый",
-                material: "кожа",
-                country: "Италия",
-                badge: "Ретро",
-                image: "https://i.imgur.com/gy9Q9ZL.jpg"
-            }
-        ];
-
-        // Функция для получения уникальных значений из базы данных
-        function getUniqueValues(key) {
-            const values = shoesDatabase.map(shoe => shoe[key]);
-            return [...new Set(values)].sort((a, b) => a - b);
+            `;
+            document.getElementById('resetFiltersFromEmpty').addEventListener('click', resetFilters);
+            return;
         }
 
-        // Функция для заполнения выпадающих списков
-        function populateFilters() {
-            // Размеры
-            const sizeSelect = document.getElementById('size');
-            const sizes = getUniqueValues('size');
-            sizes.forEach(size => {
-                const option = document.createElement('option');
-                option.value = size;
-                option.textContent = size;
-                sizeSelect.appendChild(option);
-            });
-
-            // Цвета
-            const colorSelect = document.getElementById('color');
-            const colors = getUniqueValues('color');
-            colors.forEach(color => {
-                const option = document.createElement('option');
-                option.value = color;
-                option.textContent = color.charAt(0).toUpperCase() + color.slice(1);
-                colorSelect.appendChild(option);
-            });
-
-            // Материалы
-            const materialSelect = document.getElementById('material');
-            const materials = getUniqueValues('material');
-            materials.forEach(material => {
-                const option = document.createElement('option');
-                option.value = material;
-                option.textContent = material.charAt(0).toUpperCase() + material.slice(1);
-                materialSelect.appendChild(option);
-            });
-
-            // Страны
-            const countrySelect = document.getElementById('country');
-            const countries = getUniqueValues('country');
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countrySelect.appendChild(option);
-            });
-        }
-
-        // Функция для отображения обуви
-        function displayShoes(shoes) {
-            const shoesGrid = document.getElementById('shoesGrid');
-            const resultsCount = document.getElementById('resultsCount');
+        shoes.forEach(shoe => {
+            const shoeCard = document.createElement('div');
+            shoeCard.className = 'shoe-card';
             
-            shoesGrid.innerHTML = '';
-            resultsCount.textContent = shoes.length;
-
-            if (shoes.length === 0) {
-                shoesGrid.innerHTML = `
-                    <div class="no-results">
-                        <i class="fas fa-search no-results-icon"></i>
-                        <h3 class="no-results-title">Ничего не найдено</h3>
-                        <p class="no-results-text">Попробуйте изменить параметры фильтрации</p>
-                        <button id="resetFiltersFromEmpty" class="btn btn-primary">
-                            <i class="fas fa-redo"></i> Сбросить фильтры
+            const badge = shoe.badge ? `<div class="shoe-badge">${shoe.badge}</div>` : '';
+            
+            shoeCard.innerHTML = `
+                ${badge}
+                <div class="shoe-image-container">
+                    <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\"width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);color:#8a8a8a;font-size:14px;text-align:center;padding:20px;\">${shoe.name}</div>';">
+                    <div class="shoe-actions">
+                        <button class="action-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrows-alt-h"></i>
                         </button>
                     </div>
-                `;
-                document.getElementById('resetFiltersFromEmpty').addEventListener('click', resetFilters);
-                return;
-            }
-
-            shoes.forEach(shoe => {
-                const shoeCard = document.createElement('div');
-                shoeCard.className = 'shoe-card';
-                
-                const badge = shoe.badge ? `<div class="shoe-badge">${shoe.badge}</div>` : '';
-                const discount = shoe.discount ? `
-                    <div class="shoe-discount">${shoe.discount.toLocaleString()} ₽</div>
-                    <div class="shoe-original-price">${shoe.price.toLocaleString()} ₽</div>
-                ` : `<div class="shoe-price">${shoe.price.toLocaleString()} ₽</div>`;
-                
-                shoeCard.innerHTML = `
-                    ${badge}
-                    <div class="shoe-image-container">
-                        <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\"width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);color:#6c757d;font-size:14px;text-align:center;padding:20px;\">${shoe.name}</div>';">
-                        <div class="shoe-actions">
-                            <button class="action-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-arrows-alt-h"></i>
-                            </button>
-                        </div>
+                </div>
+                <div class="shoe-info">
+                    <h3 class="shoe-name">${shoe.name}</h3>
+                    <div class="shoe-details">
+                        <span class="shoe-detail">Размер: ${shoe.size}</span>
+                        <span class="shoe-detail">${shoe.color}</span>
+                        <span class="shoe-detail">${shoe.material}</span>
+                        <span class="shoe-detail">${shoe.country}</span>
                     </div>
-                    <div class="shoe-info">
-                        <h3 class="shoe-name">${shoe.name}</h3>
-                        <div class="shoe-details">
-                            <span class="shoe-detail">Размер: ${shoe.size}</span>
-                            <span class="shoe-detail">${shoe.color}</span>
-                            <span class="shoe-detail">${shoe.material}</span>
-                        </div>
-                        <div class="shoe-price-section">
-                            <div>
-                                ${discount}
-                            </div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-bag"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                shoesGrid.appendChild(shoeCard);
-            });
-        }
-
-        // Функция для применения фильтров
-        function applyFilters() {
-            const selectedSize = document.getElementById('size').value;
-            const selectedColor = document.getElementById('color').value;
-            const selectedMaterial = document.getElementById('material').value;
-            const selectedCountry = document.getElementById('country').value;
-
-            const filteredShoes = shoesDatabase.filter(shoe => {
-                return (!selectedSize || shoe.size == selectedSize) &&
-                       (!selectedColor || shoe.color === selectedColor) &&
-                       (!selectedMaterial || shoe.material === selectedMaterial) &&
-                       (!selectedCountry || shoe.country === selectedCountry);
-            });
-
-            displayShoes(filteredShoes);
-        }
-
-        function resetFilters() {
-            document.getElementById('size').value = '';
-            document.getElementById('color').value = '';
-            document.getElementById('material').value = '';
-            document.getElementById('country').value = '';
+                </div>
+            `;
             
-            displayShoes(shoesDatabase);
-        }
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            populateFilters();
-            displayShoes(shoesDatabase);
-            
-            document.getElementById('applyFilters').addEventListener('click', applyFilters);
-            document.getElementById('resetFilters').addEventListener('click', resetFilters);
+            shoesGrid.appendChild(shoeCard);
         });
-    </script>
-</body>
-</html>
+    }
+
+    // Функция для применения фильтров
+    function applyFilters() {
+        const selectedSize = document.getElementById('size').value;
+        const selectedColor = document.getElementById('color').value;
+        const selectedMaterial = document.getElementById('material').value;
+        const selectedCountry = document.getElementById('country').value;
+
+        const filteredShoes = shoesDatabase.filter(shoe => {
+            return (!selectedSize || shoe.size == selectedSize) &&
+                   (!selectedColor || shoe.color === selectedColor) &&
+                   (!selectedMaterial || shoe.material === selectedMaterial) &&
+                   (!selectedCountry || shoe.country === selectedCountry);
+        });
+
+        displayShoes(filteredShoes);
+    }
+
+    // Функция для сброса фильтров
+    function resetFilters() {
+        document.getElementById('size').value = '';
+        document.getElementById('color').value = '';
+        document.getElementById('material').value = '';
+        document.getElementById('country').value = '';
+        
+        displayShoes(shoesDatabase);
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        populateFilters();
+        displayShoes(shoesDatabase);
+        
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+    });
+</script>
