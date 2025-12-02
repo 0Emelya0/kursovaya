@@ -7,282 +7,156 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <span class="mobile-menu-title">Меню</span>
-            <button class="mobile-menu-close" id="mobileMenuClose">×</button>
-        </div>
-        <nav class="mobile-nav">
-            <a href="#catalog" class="mobile-nav-item active" data-page="catalog">
-                <span class="mobile-nav-icon">👟</span>
-                <span class="mobile-nav-text">Каталог</span>
-            </a>
-            <a href="#filters" class="mobile-nav-item" data-page="filters">
-                <span class="mobile-nav-icon">🔍</span>
-                <span class="mobile-nav-text">Фильтры</span>
-            </a>
-            <a href="#add" class="mobile-nav-item" data-page="add">
-                <span class="mobile-nav-icon">➕</span>
-                <span class="mobile-nav-text">Добавить</span>
-            </a>
-            <a href="#about" class="mobile-nav-item" data-page="about">
-                <span class="mobile-nav-icon">ℹ️</span>
-                <span class="mobile-nav-text">О проекте</span>
-            </a>
-        </nav>
-    </div>
-
     <header class="main-header">
         <div class="container">
             <div class="header-content">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
                 <a href="#" class="logo">
-                    <span class="logo-text">ОБУВЬ</span>
+                    <span class="logo-text">КАТАЛОГ ОБУВИ</span>
                 </a>
-                <div class="desktop-nav">
-                    <a href="#catalog" class="nav-item active" data-page="catalog">Каталог</a>
-                    <a href="#filters" class="nav-item" data-page="filters">Фильтры</a>
-                    <a href="#add" class="nav-item" data-page="add">Добавить</a>
-                </div>
             </div>
         </div>
     </header>
 
-    <div class="page-container">
-        <section class="page active" id="catalogPage">
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">Каталог обуви</h1>
-                    <p class="page-subtitle">Просмотр всех моделей обуви</p>
-                </div>
-
-                <div class="results-info">
-                    <div class="results-count">
-                        Найдено моделей: <span id="resultsCount">0</span>
-                    </div>
-                    <button class="mobile-filter-btn" id="mobileFilterBtn">
-                        Фильтры
-                    </button>
-                </div>
-
-                <div class="shoes-grid" id="shoesGrid">
-                </div>
-
-                <div id="noResultsMessage" class="no-results-message" style="display: none;">
-                    <div class="message-icon">👟</div>
-                    <h3 class="message-title">Ничего не найдено</h3>
-                    <p class="message-text">Попробуйте изменить параметры фильтрации</p>
-                    <button id="resetFiltersMessage" class="btn btn-primary">
-                        Сбросить фильтры
-                    </button>
-                </div>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Каталог обуви</h1>
+                <p class="hero-subtitle">Исследуйте нашу коллекцию обуви с удобной системой фильтрации</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="page" id="filtersPage">
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">Фильтры поиска</h1>
-                    <p class="page-subtitle">Настройте параметры поиска обуви</p>
-                </div>
+    <div class="container">
+        <div class="toggle-form-container">
+            <button id="toggleFormBtn" class="toggle-form-btn">
+                Добавить новую обувь
+            </button>
+        </div>
 
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label class="filter-label">Размер обуви</label>
-                        <select id="size" class="filter-select">
-                            <option value="">Все размеры</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">Цвет</label>
-                        <select id="color" class="filter-select">
-                            <option value="">Все цвета</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">Материал</label>
-                        <select id="material" class="filter-select">
-                            <option value="">Все материалы</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">Страна производитель</label>
-                        <select id="country" class="filter-select">
-                            <option value="">Все страны</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="filter-buttons">
-                    <button id="resetFilters" class="btn btn-secondary">
-                        Сбросить
-                    </button>
-                    <button id="applyFilters" class="btn btn-primary">
-                        Применить фильтры
-                    </button>
-                </div>
-
-                <div class="back-to-catalog">
-                    <button class="btn btn-secondary" data-page="catalog">
-                        ← Вернуться в каталог
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section class="page" id="addPage">
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">Добавить новую обувь</h1>
-                    <p class="page-subtitle">Заполните форму для добавления новой модели</p>
-                </div>
-
-                <div class="add-shoe-form">
-                    <form id="addShoeForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="shoeName">Название обуви *</label>
-                                <input type="text" id="shoeName" name="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="shoeSize">Размер *</label>
-                                <input type="number" id="shoeSize" name="size" min="35" max="50" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="shoeColor">Цвет *</label>
-                                <input type="text" id="shoeColor" name="color" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="shoeMaterial">Материал *</label>
-                                <select id="shoeMaterial" name="material" required>
-                                    <option value="">Выберите материал</option>
-                                    <option value="кожа">Кожа</option>
-                                    <option value="текстиль">Текстиль</option>
-                                    <option value="замша">Замша</option>
-                                    <option value="резина">Резина</option>
-                                    <option value="лакированная кожа">Лакированная кожа</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="shoeCountry">Страна производитель *</label>
-                                <input type="text" id="shoeCountry" name="country" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="shoeBadge">Бейдж</label>
-                                <select id="shoeBadge" name="badge">
-                                    <option value="">Без бейджа</option>
-                                    <option value="Хит">Хит</option>
-                                    <option value="Новинка">Новинка</option>
-                                    <option value="Скидка">Скидка</option>
-                                    <option value="Премиум">Премиум</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="shoeImage">URL изображения *</label>
-                                <input type="url" id="shoeImage" name="image" placeholder="https://example.com/image.jpg" required>
-                            </div>
+        <section class="add-shoe-section" id="addShoeSection" style="display: none;">
+            <div class="add-shoe-form">
+                <h2 class="form-title">Добавить новую обувь</h2>
+                <form id="addShoeForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="shoeName">Название обуви *</label>
+                            <input type="text" id="shoeName" name="name" required>
                         </div>
                         
-                        <div class="form-buttons">
-                            <button type="button" id="cancelForm" class="btn btn-secondary">
-                                Отмена
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                Добавить обувь
-                            </button>
+                        <div class="form-group">
+                            <label for="shoeSize">Размер *</label>
+                            <input type="number" id="shoeSize" name="size" min="35" max="50" required>
                         </div>
-                    </form>
+                        
+                        <div class="form-group">
+                            <label for="shoeColor">Цвет *</label>
+                            <input type="text" id="shoeColor" name="color" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shoeMaterial">Материал *</label>
+                            <select id="shoeMaterial" name="material" required>
+                                <option value="">Выберите материал</option>
+                                <option value="кожа">Кожа</option>
+                                <option value="текстиль">Текстиль</option>
+                                <option value="замша">Замша</option>
+                                <option value="резина">Резина</option>
+                                <option value="лакированная кожа">Лакированная кожа</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shoeCountry">Страна производитель *</label>
+                            <input type="text" id="shoeCountry" name="country" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shoeBadge">Бейдж</label>
+                            <select id="shoeBadge" name="badge">
+                                <option value="">Без бейджа</option>
+                                <option value="Хит">Хит</option>
+                                <option value="Новинка">Новинка</option>
+                                <option value="Скидка">Скидка</option>
+                                <option value="Премиум">Премиум</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="shoeImage">URL изображения *</label>
+                            <input type="url" id="shoeImage" name="image" placeholder="https://example.com/image.jpg" required>
+                        </div>
+                    </div>
                     
-                    <div id="formMessage" class="form-message"></div>
-                </div>
-                <div class="back-to-catalog">
-                    <button class="btn btn-secondary" data-page="catalog">
-                        ← Вернуться в каталог
-                    </button>
-                </div>
+                    <div class="form-buttons">
+                        <button type="button" id="cancelForm" class="btn btn-secondary">Отмена</button>
+                        <button type="submit" class="btn btn-primary">
+                            Добавить обувь
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="formMessage" class="form-message"></div>
             </div>
         </section>
 
-        <section class="page" id="aboutPage">
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="page-title">О проекте</h1>
-                    <p class="page-subtitle">Информация о системе номенклатуры обуви</p>
+        <section class="filters-section">
+            <div class="filters-header">
+                <h2 class="filters-title">Фильтры поиска</h2>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Размер обуви</label>
+                    <select id="size" class="filter-select">
+                        <option value="">Все размеры</option>
+                    </select>
                 </div>
 
-                <div class="about-content">
-                    <div class="about-card">
-                        <h3>О проекте</h3>
-                        <p>Это учебный проект по созданию системы номенклатуры обуви с возможностью фильтрации и добавления новых моделей.</p>
-                    </div>
-
-                    <div class="about-card">
-                        <h3>Функциональность</h3>
-                        <ul>
-                            <li>Просмотр каталога обуви</li>
-                            <li>Фильтрация по размеру, цвету, материалу и стране</li>
-                            <li>Добавление новых моделей через форму</li>
-                            <li>Хранение данных в Firebase</li>
-                            <li>Адаптивный дизайн для всех устройств</li>
-                        </ul>
-                    </div>
-
-                    <div class="about-card">
-                        <h3>Технологии</h3>
-                        <ul>
-                            <li>HTML5, CSS3, JavaScript</li>
-                            <li>Firebase Firestore для хранения данных</li>
-                            <li>Адаптивный веб-дизайн</li>
-                            <li>Мобильная навигация</li>
-                        </ul>
-                    </div>
+                <div class="filter-group">
+                    <label class="filter-label">Цвет</label>
+                    <select id="color" class="filter-select">
+                        <option value="">Все цвета</option>
+                    </select>
                 </div>
 
-                <div class="back-to-catalog">
-                    <button class="btn btn-secondary" data-page="catalog">
-                        ← Вернуться в каталог
-                    </button>
+                <div class="filter-group">
+                    <label class="filter-label">Материал</label>
+                    <select id="material" class="filter-select">
+                        <option value="">Все материалы</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Страна производитель</label>
+                    <select id="country" class="filter-select">
+                        <option value="">Все страны</option>
+                    </select>
                 </div>
             </div>
+            <div class="filter-buttons">
+                <button id="resetFilters" class="btn btn-secondary">
+                    Сбросить
+                </button>
+                <button id="applyFilters" class="btn btn-primary">
+                    Применить фильтры
+                </button>
+            </div>
         </section>
+
+        <div class="results-info">
+            <div class="results-count">Найдено моделей: <span id="resultsCount">0</span></div>
+        </div>
+
+        <div class="shoes-grid" id="shoesGrid">
+        </div>
     </div>
 
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <p>Система номенклатуры обуви &copy; 2024</p>
-                <p class="footer-sub">Учебный проект</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Номенклатура обуви. Курсовой проект.</p>
             </div>
         </div>
     </footer>
-
-    <nav class="mobile-bottom-nav">
-        <a href="#catalog" class="mobile-bottom-item active" data-page="catalog">
-            <span class="mobile-bottom-icon">👟</span>
-            <span class="mobile-bottom-text">Каталог</span>
-        </a>
-        <a href="#filters" class="mobile-bottom-item" data-page="filters">
-            <span class="mobile-bottom-icon">🔍</span>
-            <span class="mobile-bottom-text">Фильтры</span>
-        </a>
-        <a href="#add" class="mobile-bottom-item" data-page="add">
-            <span class="mobile-bottom-icon">➕</span>
-            <span class="mobile-bottom-text">Добавить</span>
-        </a>
-    </nav>
 
     <script type="module" src="app.js"></script>
 </body>
