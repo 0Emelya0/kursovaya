@@ -1,4 +1,4 @@
-/* === ОСНОВНЫЕ СТИЛИ === */
+
 * {
     margin: 0;
     padding: 0;
@@ -63,7 +63,6 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* === HERO SECTION === */
 .hero {
     background: linear-gradient(135deg, #000000 0%, #333333 100%);
     color: var(--white);
@@ -93,7 +92,6 @@ body {
     color: #cccccc;
 }
 
-/* === ADD SHOE FORM === */
 .toggle-form-container {
     text-align: center;
     margin-bottom: 20px;
@@ -211,7 +209,6 @@ body {
     display: block;
 }
 
-/* === FILTERS SECTION === */
 .filters-section {
     background: var(--white);
     border-radius: var(--radius);
@@ -312,7 +309,6 @@ body {
     border-color: var(--gray);
 }
 
-/* === RESULTS INFO === */
 .results-info {
     display: flex;
     justify-content: space-between;
@@ -327,7 +323,6 @@ body {
     font-weight: 500;
 }
 
-/* === SHOES GRID === */
 .shoes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -417,7 +412,6 @@ body {
     border: 1px solid var(--border);
 }
 
-/* === NO RESULTS === */
 .no-results {
     text-align: center;
     padding: 60px 20px;
@@ -444,7 +438,6 @@ body {
     margin-bottom: 25px;
 }
 
-/* === FOOTER === */
 .main-footer {
     background: var(--primary);
     color: var(--white);
@@ -467,7 +460,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.2rem;
