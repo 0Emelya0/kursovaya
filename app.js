@@ -97,6 +97,7 @@ function populateFilters() {
     const countrySelect = document.getElementById('country');
     
     if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+        console.error('Один или несколько элементов select не найдены в DOM');
         return;
     }
 
@@ -142,9 +143,9 @@ function populateFilters() {
 function displayShoes(shoes) {
     const shoesGrid = document.getElementById('shoesGrid');
     const resultsCount = document.getElementById('resultsCount');
-    const noResultsMessage = document.getElementById('noResultsMessage');
     
     if (!shoesGrid || !resultsCount) {
+        console.error('Элементы shoesGrid или resultsCount не найдены в DOM');
         return;
     }
     
@@ -152,10 +153,18 @@ function displayShoes(shoes) {
     resultsCount.textContent = shoes.length;
 
     if (shoes.length === 0) {
-        noResultsMessage.style.display = 'block';
+        shoesGrid.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-icon">📦</div>
+                <h3 class="no-results-title">Ничего не найдено</h3>
+                <p class="no-results-text">Попробуйте изменить параметры фильтрации</p>
+                <button id="resetFiltersFromEmpty" class="btn btn-primary">
+                    Сбросить фильтры
+                </button>
+            </div>
+        `;
+        document.getElementById('resetFiltersFromEmpty').addEventListener('click', resetFilters);
         return;
-    } else {
-        noResultsMessage.style.display = 'none';
     }
 
     shoes.forEach(shoe => {
@@ -191,6 +200,7 @@ function applyFilters() {
     const countrySelect = document.getElementById('country');
     
     if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+        console.error('Один или несколько элементов select не найдены в DOM');
         return;
     }
     
@@ -207,9 +217,6 @@ function applyFilters() {
     });
 
     displayShoes(filteredShoes);
-    if (window.innerWidth <= 768) {
-        switchPage('catalog');
-    }
 }
 
 function resetFilters() {
@@ -219,6 +226,7 @@ function resetFilters() {
     const countrySelect = document.getElementById('country');
     
     if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+        console.error('Один или несколько элементов select не найдены в DOM');
         return;
     }
     
@@ -253,100 +261,57 @@ function handleFormSubmit(event) {
         if (success) {
             event.target.reset();
             loadShoesFromFirebase();
-            if (window.innerWidth <= 768) {
-                switchPage('catalog');
-            }
         }
     });
 }
 
-function switchPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
+function toggleFormVisibility() {
+    const formSection = document.getElementById('addShoeSection');
+    const toggleBtn = document.getElementById('toggleFormBtn');
     
-    const activePage = document.getElementById(pageId + 'Page');
-    if (activePage) {
-        activePage.classList.add('active');
+    if (formSection.style.display === 'none') {
+        formSection.style.display = 'block';
+        toggleBtn.textContent = 'Скрыть форму добавления';
+    } else {
+        formSection.style.display = 'none';
+        toggleBtn.textContent = 'Добавить новую обувь';
     }
-    
-    document.querySelectorAll('.nav-item, .mobile-nav-item, .mobile-bottom-item').forEach(item => {
-        item.classList.remove('active');
-        if (item.dataset.page === pageId) {
-            item.classList.add('active');
-        }
-    });
-    
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.remove('active');
-}
-
-function isMobileDevice() {
-    return window.innerWidth <= 768;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const mainElements = [
+        'size', 'color', 'material', 'country', 
+        'shoesGrid', 'resultsCount', 'applyFilters', 'resetFilters',
+        'addShoeForm', 'cancelForm', 'toggleFormBtn', 'addShoeSection'
+    ];
+    
+    let allElementsExist = true;
+    mainElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (!element) {
+            console.error(`Элемент с id "${elementId}" не найден в DOM`);
+            allElementsExist = false;
+        }
+    });
+    
+    if (!allElementsExist) {
+        console.error('Не все необходимые элементы найдены в DOM');
+        return;
+    }
+    
     loadShoesFromFirebase();
     
-    const navItems = document.querySelectorAll('[data-page]');
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const pageId = item.dataset.page;
-            switchPage(pageId);
-        });
-    });
-    
-    document.getElementById('applyFilters')?.addEventListener('click', applyFilters);
-    document.getElementById('resetFilters')?.addEventListener('click', resetFilters);
-    document.getElementById('resetFiltersMessage')?.addEventListener('click', resetFilters);
-    
-    document.getElementById('mobileFilterBtn')?.addEventListener('click', () => {
-        switchPage('filters');
-    });
-    
-    document.getElementById('addShoeForm')?.addEventListener('submit', handleFormSubmit);
-    document.getElementById('cancelForm')?.addEventListener('click', () => {
+    document.getElementById('applyFilters').addEventListener('click', applyFilters);
+    document.getElementById('resetFilters').addEventListener('click', resetFilters);
+    document.getElementById('addShoeForm').addEventListener('submit', handleFormSubmit);
+    document.getElementById('cancelForm').addEventListener('click', () => {
         document.getElementById('addShoeForm').reset();
         showMessage('Форма очищена', 'success');
     });
-    
-    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
-        document.getElementById('mobileMenu').classList.add('active');
-    });
-    
-    document.getElementById('mobileMenuClose')?.addEventListener('click', () => {
-        document.getElementById('mobileMenu').classList.remove('active');
-    });
-    
-    document.addEventListener('click', (e) => {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuBtn = document.getElementById('mobileMenuBtn');
-        if (mobileMenu.classList.contains('active') && 
-            !mobileMenu.contains(e.target) && 
-            !menuBtn.contains(e.target)) {
-            mobileMenu.classList.remove('active');
-        }
-    });
-    
-    onSnapshot(collection(db, "shoes"), () => {
+    document.getElementById('toggleFormBtn').addEventListener('click', toggleFormVisibility);
+
+    onSnapshot(collection(db, "shoes"), (snapshot) => {
+        console.log('Real-time update received');
         loadShoesFromFirebase();
     });
-    
-    function checkMobileNavigation() {
-        const mobileBottomNav = document.querySelector('.mobile-bottom-nav');
-        const desktopNav = document.querySelector('.desktop-nav');
-        
-        if (isMobileDevice()) {
-            mobileBottomNav.style.display = 'flex';
-            desktopNav.style.display = 'none';
-            switchPage('catalog');
-        } else {
-            mobileBottomNav.style.display = 'none';
-            desktopNav.style.display = 'flex';
-        }
-    }
-    
-    checkMobileNavigation();
-    window.addEventListener('resize', checkMobileNavigation);
 });
