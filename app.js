@@ -1,8 +1,7 @@
-// Import Firebase functions
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCTDnE9LPdO2W5GSr6KrKIMkPYcun4Z3SE",
     authDomain: "kursovaya-30ea8.firebaseapp.com",
@@ -13,14 +12,11 @@ const firebaseConfig = {
     measurementId: "G-6RFFEKXTP1"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// База данных обуви (теперь будем использовать Firebase)
 let shoesDatabase = [];
 
-// Функция для загрузки данных из Firebase
 async function loadShoesFromFirebase() {
     try {
         const querySnapshot = await getDocs(collection(db, "shoes"));
@@ -36,12 +32,10 @@ async function loadShoesFromFirebase() {
         populateFilters();
     } catch (error) {
         console.error('Ошибка загрузки данных:', error);
-        // Если Firebase не доступен, используем локальные данные
         loadLocalShoes();
     }
 }
 
-// Локальные данные для fallback
 function loadLocalShoes() {
     shoesDatabase = [
         {
@@ -69,7 +63,6 @@ function loadLocalShoes() {
     populateFilters();
 }
 
-// Функция для добавления новой обуви в Firebase
 async function addShoeToFirebase(shoeData) {
     try {
         const docRef = await addDoc(collection(db, "shoes"), shoeData);
@@ -83,7 +76,6 @@ async function addShoeToFirebase(shoeData) {
     }
 }
 
-// Функция для показа сообщений
 function showMessage(message, type) {
     const messageEl = document.getElementById('formMessage');
     messageEl.textContent = message;
@@ -94,13 +86,11 @@ function showMessage(message, type) {
     }, 5000);
 }
 
-// Функция для получения уникальных значений из базы данных
 function getUniqueValues(key) {
     const values = shoesDatabase.map(shoe => shoe[key]);
     return [...new Set(values)].sort((a, b) => a - b);
 }
 
-// Функция для заполнения выпадающих списков
 function populateFilters() {
     const sizeSelect = document.getElementById('size');
     const colorSelect = document.getElementById('color');
@@ -112,14 +102,12 @@ function populateFilters() {
         return;
     }
 
-    // Очищаем существующие опции (кроме первой)
     [sizeSelect, colorSelect, materialSelect, countrySelect].forEach(select => {
         while (select.children.length > 1) {
             select.removeChild(select.lastChild);
         }
     });
 
-    // Размеры
     const sizes = getUniqueValues('size');
     sizes.forEach(size => {
         const option = document.createElement('option');
@@ -128,7 +116,6 @@ function populateFilters() {
         sizeSelect.appendChild(option);
     });
 
-    // Цвета
     const colors = getUniqueValues('color');
     colors.forEach(color => {
         const option = document.createElement('option');
@@ -137,7 +124,6 @@ function populateFilters() {
         colorSelect.appendChild(option);
     });
 
-    // Материалы
     const materials = getUniqueValues('material');
     materials.forEach(material => {
         const option = document.createElement('option');
@@ -146,7 +132,6 @@ function populateFilters() {
         materialSelect.appendChild(option);
     });
 
-    // Страны
     const countries = getUniqueValues('country');
     countries.forEach(country => {
         const option = document.createElement('option');
@@ -156,7 +141,6 @@ function populateFilters() {
     });
 }
 
-// Функция для отображения обуви
 function displayShoes(shoes) {
     const shoesGrid = document.getElementById('shoesGrid');
     const resultsCount = document.getElementById('resultsCount');
@@ -210,7 +194,6 @@ function displayShoes(shoes) {
     });
 }
 
-// Функция для применения фильтров
 function applyFilters() {
     const sizeSelect = document.getElementById('size');
     const colorSelect = document.getElementById('color');
@@ -237,7 +220,6 @@ function applyFilters() {
     displayShoes(filteredShoes);
 }
 
-// Функция для сброса фильтров
 function resetFilters() {
     const sizeSelect = document.getElementById('size');
     const colorSelect = document.getElementById('color');
@@ -257,7 +239,6 @@ function resetFilters() {
     displayShoes(shoesDatabase);
 }
 
-// Функция для обработки формы добавления обуви
 function handleFormSubmit(event) {
     event.preventDefault();
     
@@ -272,23 +253,19 @@ function handleFormSubmit(event) {
         image: formData.get('image')
     };
 
-    // Валидация
     if (!shoeData.name || !shoeData.size || !shoeData.color || !shoeData.material || !shoeData.country || !shoeData.image) {
         showMessage('Пожалуйста, заполните все обязательные поля', 'error');
         return;
     }
 
-    // Добавляем в Firebase
     addShoeToFirebase(shoeData).then(success => {
         if (success) {
             event.target.reset();
-            // Обновляем данные из Firebase
             loadShoesFromFirebase();
         }
     });
 }
 
-// Функция для переключения видимости формы
 function toggleFormVisibility() {
     const formSection = document.getElementById('addShoeSection');
     const toggleBtn = document.getElementById('toggleFormBtn');
@@ -302,9 +279,7 @@ function toggleFormVisibility() {
     }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-    // Проверяем существование основных элементов
     const mainElements = [
         'size', 'color', 'material', 'country', 
         'shoesGrid', 'resultsCount', 'applyFilters', 'resetFilters',
@@ -325,10 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
-    // Загружаем данные из Firebase
     loadShoesFromFirebase();
     
-    // Настраиваем обработчики событий
     document.getElementById('applyFilters').addEventListener('click', applyFilters);
     document.getElementById('resetFilters').addEventListener('click', resetFilters);
     document.getElementById('addShoeForm').addEventListener('submit', handleFormSubmit);
@@ -338,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('toggleFormBtn').addEventListener('click', toggleFormVisibility);
 
-    // Real-time updates from Firebase
     onSnapshot(collection(db, "shoes"), (snapshot) => {
         console.log('Real-time update received');
         loadShoesFromFirebase();
