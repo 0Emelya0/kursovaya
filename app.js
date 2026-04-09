@@ -2,18 +2,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCTDnE9LPdO2W5GSr6KrKIMkPYcun4Z3SE",
-  authDomain: "kursovaya-30ea8.firebaseapp.com",
-  projectId: "kursovaya-30ea8",
-  storageBucket: "kursovaya-30ea8.firebasestorage.app",
-  messagingSenderId: "1079038592956",
-  appId: "1:1079038592956:web:d05b5a7a63d52487b88db9",
-  measurementId: "G-6RFFEKXTP1"
+const firebaseConfig = { 
+  apiKey : "AIzaSyCTDnE9LPdO2W5GSr6KrKIMkPYcun4Z3SE" , 
+  authDomain : "kursovaya-30ea8.firebaseapp.com" , 
+  projectId : "курсовая-30ea8" , 
+  storageBucket : "kursovaya-30ea8.firebasestorage.app" , 
+  messagingSenderId : "1079038592956" , 
+  appId : "1:1079038592956:web:d05b5a7a63d52487b88db9" , 
+  measurementId : "G-6RFFEKXTP1" 
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app = initializeApp ( firebaseConfig );
+const analytics = getAnalytics ( app );
 
 let shoesDatabase = [];
 
