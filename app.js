@@ -1,19 +1,19 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 const firebaseConfig = { 
-  apiKey : "AIzaSyCTDnE9LPdO2W5GSr6KrKIMkPYcun4Z3SE" , 
-  authDomain : "kursovaya-30ea8.firebaseapp.com" , 
-  projectId : "курсовая-30ea8" , 
-  storageBucket : "kursovaya-30ea8.firebasestorage.app" , 
-  messagingSenderId : "1079038592956" , 
-  appId : "1:1079038592956:web:d05b5a7a63d52487b88db9" , 
-  measurementId : "G-6RFFEKXTP1" 
+  apiKey: "AIzaSyCTDnE9LPdO2W5GSr6KrKIMkPYcun4Z3SE", 
+  authDomain: "kursovaya-30ea8.firebaseapp.com", 
+  projectId: "kursovaya-30ea8", 
+  storageBucket: "kursovaya-30ea8.firebasestorage.app", 
+  messagingSenderId: "1079038592956", 
+  appId: "1:1079038592956:web:d05b5a7a63d52487b88db9", 
+  measurementId: "G-6RFFEKXTP1" 
 };
 
-const app = initializeApp ( firebaseConfig );
-const analytics = getAnalytics ( app );
+// Инициализация Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); // ✅ Добавлена инициализация db
 
 let shoesDatabase = [];
 
@@ -46,7 +46,7 @@ function loadLocalShoes() {
             material: "текстиль",
             country: "США",
             badge: "Хит",
-            image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%23333' d='M50,80 L150,80 L140,150 L60,150 Z'/%3E%3Ccircle fill='%23000' cx='70' cy='170' r='10'/%3E%3Ccircle fill='%23000' cx='130' cy='170' r='10'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='110' text-anchor='middle'%3ENike Air Max%3C/text%3E%3C/svg%3E"
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%23333' d='M50,80 L150,80 L140,150 L60,150 Z'/%3E%3Ccircle fill='%23000' cx='70' cy='170' r='10'/%3E%3Ccircle fill='%23000' cx='130' cy='170' r='10'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='110' text-anchor='middle'%3ENike Air Max%3C/text%3E%3C/svg%3E"
         },
         {
             id: "local-2",
@@ -56,7 +56,7 @@ function loadLocalShoes() {
             material: "кожа",
             country: "Италия",
             badge: "Премиум",
-            image: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%238B4513' d='M60,90 L140,90 L130,160 L70,160 Z'/%3E%3Cpath fill='%23592c0c' d='M80,90 L120,90 L115,140 L85,140 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='120' text-anchor='middle'%3EКлассические%3C/text%3E%3C/svg%3E"
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Cpath fill='%238B4513' d='M60,90 L140,90 L130,160 L70,160 Z'/%3E%3Cpath fill='%23592c0c' d='M80,90 L120,90 L115,140 L85,140 Z'/%3E%3Ctext fill='%23666' font-family='Arial' font-size='12' x='100' y='120' text-anchor='middle'%3EКлассические%3C/text%3E%3C/svg%3E"
         }
     ];
     displayShoes(shoesDatabase);
@@ -78,8 +78,11 @@ async function addShoeToFirebase(shoeData) {
 
 function showMessage(message, type) {
     const messageEl = document.getElementById('formMessage');
+    if (!messageEl) return;
+    
     messageEl.textContent = message;
     messageEl.className = `form-message ${type}`;
+    messageEl.style.display = 'block';
     
     setTimeout(() => {
         messageEl.style.display = 'none';
@@ -87,8 +90,11 @@ function showMessage(message, type) {
 }
 
 function getUniqueValues(key) {
-    const values = shoesDatabase.map(shoe => shoe[key]);
-    return [...new Set(values)].sort((a, b) => a - b);
+    const values = shoesDatabase.map(shoe => shoe[key]).filter(val => val != null);
+    if (key === 'size') {
+        return [...new Set(values)].sort((a, b) => a - b);
+    }
+    return [...new Set(values)].sort();
 }
 
 function populateFilters() {
@@ -102,9 +108,19 @@ function populateFilters() {
         return;
     }
 
+    // Очищаем все select, оставляя первый option "Все..."
     [sizeSelect, colorSelect, materialSelect, countrySelect].forEach(select => {
-        while (select.children.length > 1) {
-            select.removeChild(select.lastChild);
+        const defaultOption = select.querySelector('option[value=""]');
+        select.innerHTML = '';
+        if (defaultOption) {
+            select.appendChild(defaultOption.cloneNode(true));
+        } else {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = select.id === 'size' ? 'Все размеры' : 
+                                select.id === 'color' ? 'Все цвета' :
+                                select.id === 'material' ? 'Все материалы' : 'Все страны';
+            select.appendChild(option);
         }
     });
 
@@ -164,7 +180,10 @@ function displayShoes(shoes) {
                 </button>
             </div>
         `;
-        document.getElementById('resetFiltersFromEmpty').addEventListener('click', resetFilters);
+        const resetBtn = document.getElementById('resetFiltersFromEmpty');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetFilters);
+        }
         return;
     }
 
@@ -174,10 +193,13 @@ function displayShoes(shoes) {
         
         const badge = shoe.badge ? `<div class="shoe-badge">${shoe.badge}</div>` : '';
         
+        // Исправлен обработчик onerror
+        const fallbackImage = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Ctext fill='%23999' font-family='Arial' font-size='14' x='100' y='100' text-anchor='middle' dominant-baseline='middle'%3E${encodeURIComponent(shoe.name.substring(0, 20))}%3C/text%3E%3C/svg%3E`;
+        
         shoeCard.innerHTML = `
             ${badge}
             <div class="shoe-image-container">
-                <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'%3E%3Crect fill=\'%23f5f5f5\' width=\'200\' height=\'200\'/%3E%3Ctext fill=\'%23999\' font-family=\'Arial\' font-size=\'14\' x=\'100\' y=\'100\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(shoe.name)}%3C/text%3E%3C/svg%3E'">
+                <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image" onerror="this.src='${fallbackImage}'">
             </div>
             <div class="shoe-info">
                 <h3 class="shoe-name">${shoe.name}</h3>
@@ -188,131 +210,264 @@ function displayShoes(shoes) {
                     <span class="shoe-detail">${shoe.country}</span>
                 </div>
             </div>
-        `;
+ `        `;
         
-        shoesGrid.appendChild(shoeCard);
+;
+        
+        shoes        shoesGrid.appendChildGrid.appendChild(shoe(shoeCard);
+Card);
+    });
     });
 }
 
-function applyFilters() {
-    const sizeSelect = document.getElementById('size');
-    const colorSelect = document.getElementById('color');
-    const materialSelect = document.getElementById('material');
-    const countrySelect = document.getElementById('country');
-    
-    if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
-        console.error('Один или несколько элементов select не найдены в DOM');
-        return;
+function}
+
+function applyFilters applyFilters() {
+() {
+    const    const sizeSelect sizeSelect = document.getElementById(' = document.getElementById('size');
+size');
+    const colorSelect    const colorSelect = document = document.getElementById('.getElementById('color');
+color');
+       const const materialSelect materialSelect = document = document.getElementById('.getElementById('material');
+material');
+    const    const countrySelect countrySelect = document.getElementById(' = documentcountry');
+.getElementById('    
+   country');
+ if (!    
+    if (!sizeSelectsizeSelect || ! || !colorSelectcolorSelect || ! ||materialSelect !materialSelect || ! ||country !countrySelectSelect) {
+) {
+        console        console.error('.error('ОдинОдин или несколько или несколько элементов select элементов select не найд не найдены вены в DOM');
+ DOM');
+        return        return;
+   ;
     }
     
-    const selectedSize = sizeSelect.value;
-    const selectedColor = colorSelect.value;
-    const selectedMaterial = materialSelect.value;
-    const selectedCountry = countrySelect.value;
+ }
+    
+    const    const selectedSize selectedSize = size = sizeSelect.valueSelect.value;
+   ;
+    const selected const selectedColor =Color = colorSelect colorSelect.value;
+.value;
+    const    const selectedMaterial selectedMaterial = material = materialSelect.valueSelect.value;
+   ;
+    const selected const selectedCountry =Country = countrySelect countrySelect.value;
 
-    const filteredShoes = shoesDatabase.filter(shoe => {
-        return (!selectedSize || shoe.size == selectedSize) &&
+.value;
+
+    const    const filteredS filteredShoeshoes = shoes = shoesDatabase.filterDatabase.filter(shoe(shoe => {
+ => {
+        return        return (!selectedSize || shoe.size == selectedSize) &&
                (!selectedColor || shoe.color === selectedColor) &&
-               (!selectedMaterial || shoe.material === selectedMaterial) &&
-               (!selectedCountry || shoe.country === selectedCountry);
-    });
+               (!selectedMaterial || shoe.m (!selectedSize || shoe.size == selectedSize) &&
+               (!selectedColor || shoe.color === selectedColor) &&
+               (!selectedMaterial || shoe.materialaterial === === selectedMaterial selectedMaterial) &&
+) &&
+                             (!selectedCountry (!selectedCountry || shoe || shoe.country.country === selected ===Country);
+ selectedCountry);
+       });
 
-    displayShoes(filteredShoes);
+ });
+
+    display    displayShoShoes(filteres(filteredSedShoeshoes);
 }
 
-function resetFilters() {
-    const sizeSelect = document.getElementById('size');
-    const colorSelect = document.getElementById('color');
-    const materialSelect = document.getElementById('material');
-    const countrySelect = document.getElementById('country');
+);
+}
+
+function resetfunction resetFilters()Filters() {
+    {
+    const sizeSelect = document.getElementById const sizeSelect = document.getElementById('size('size');
+   ');
+    const color const colorSelect =Select = document.getElementById document.getElementById('('colorcolor');
+    const materialSelect = document.getElementById');
+    const materialSelect = document.getElementById('material('material');
+   ');
+    const country const countrySelect = document.getElementByIdSelect = document.getElementById('country('country');
     
-    if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
-        console.error('Один или несколько элементов select не найдены в DOM');
+');
+    
+    if    if (!size (!sizeSelect ||Select !color ||Select || !colorSelect || !material !materialSelect || !countrySelectSelect || !countrySelect)) {
+        {
+        console.error('О console.error('Один илидин или несколько элементов несколько элементов select select не не найдены найдены в DOM в DOM');
+       ');
         return;
+ return;
+    }
     }
     
-    sizeSelect.value = '';
-    colorSelect.value = '';
-    materialSelect.value = '';
-    countrySelect.value = '';
+       
+    sizeSelect sizeSelect.value =.value = '';
+    '';
+    colorSelect colorSelect.value =.value = '';
+    '';
+    materialSelect materialSelect.value =.value = '';
+    '';
+    countrySelect countrySelect.value =.value = '';
+ '';
     
-    displayShoes(shoesDatabase);
+    
+    display    displayShoShoes(shes(shoesDatabaseoesDatabase);
 }
 
-function handleFormSubmit(event) {
-    event.preventDefault();
+);
+}
+
+function handlefunction handleFormSubmitFormSubmit(event)(event) {
+    {
+    event.preventDefault event.preventDefault();
+();
     
-    const formData = new FormData(event.target);
-    const shoeData = {
-        name: formData.get('name'),
-        size: parseInt(formData.get('size')),
-        color: formData.get('color'),
-        material: formData.get('material'),
-        country: formData.get('country'),
-        badge: formData.get('badge') || '',
-        image: formData.get('image')
+    
+    const    const formData formData = new = new FormData FormData(event.target(event.target);
+   );
+    const shoe const shoeData =Data = {
+        {
+        name: name: formData formData.get('.get('name'),
+name'),
+        size        size: parseInt(formData: parseInt(formData.get('.get('size')),
+size')),
+        color        color: form: formData.getData.get('color('color'),
+       '),
+        material: material: formData formData.get('.get('material'),
+        countrymaterial'),
+        country: form: formDataData.get.get('country('country'),
+       '),
+        badge: badge: formData formData.get('.get('badgebad') ||ge '',
+       ') || image '',
+       : image: formData formData.get('.get('image')
+image')
     };
 
-    if (!shoeData.name || !shoeData.size || !shoeData.color || !shoeData.material || !shoeData.country || !shoeData.image) {
-        showMessage('Пожалуйста, заполните все обязательные поля', 'error');
-        return;
+    };
+
+    if    if (!shoeData.name (!shoe || !Data.nameshoeData || !shoeData.size ||.size || !shoe !shoeData.colorData.color || ! || !shoeDatashoeData.material.material || ! || !shoeDatashoeData.country.country || ! || !shoeDatashoeData.image).image) {
+        {
+        showMessage('П showMessage('Пожалуйста, заполнитеожалуйста, заполните все обяза все обязательные полятельные поля', '', 'error');
+error');
+        return        return;
+   ;
     }
 
-    addShoeToFirebase(shoeData).then(success => {
-        if (success) {
-            event.target.reset();
-            loadShoesFromFirebase();
+    }
+
+    add addSShoehoeToToFirebaseFirebase(shoe(shoeData).Data).then(sthen(success =>uccess => {
+        {
+        if ( if (success)success) {
+            {
+            event.target event.target.reset();
+.reset();
+            load            loadShoShoesFromesFromFirebaseFirebase();
+       ();
         }
+    }
     });
 }
 
-function toggleFormVisibility() {
-    const formSection = document.getElementById('addShoeSection');
-    const toggleBtn = document.getElementById('toggleFormBtn');
+ });
+}
+
+function togglefunction toggleFormVisibilityFormVisibility() {
+() {
+    const    const formSection formSection = document = document.getElementById('.getElementById('addSaddShoeSectionhoeSection');
+   ');
+    const toggle const toggleBtnBtn = document.getElementById = document.getElementById('toggle('FormBtntoggleFormBtn');
     
-    if (formSection.style.display === 'none') {
-        formSection.style.display = 'block';
-        toggleBtn.textContent = 'Скрыть форму добавления';
-    } else {
-        formSection.style.display = 'none';
-        toggleBtn.textContent = 'Добавить новую обувь';
+');
+    if    
+    if (!form (!formSection ||Section || !toggle !toggleBtn)Btn) return;
+ return;
+    
+       
+    if ( if (formSectionformSection.style.display === '.style.displaynone === '') {
+       none') {
+        formSection formSection.style.display = '.style.display = 'blockblock';
+        toggle';
+        toggleBtn.textBtn.textContent =Content = 'С 'Скрытькрыть форму добав форму добавления';
+ления';
+    }    } else else {
+ {
+               formSection.style form.display =Section.style.display = 'none';
+        'none';
+        toggleBtn toggleBtn.textContent.textContent = ' = 'ДобаДобавить новвить новую обую обувувь';
+ь';
+    }
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const mainElements = [
-        'size', 'color', 'material', 'country', 
-        'shoesGrid', 'resultsCount', 'applyFilters', 'resetFilters',
-        'addShoeForm', 'cancelForm', 'toggleFormBtn', 'addShoeSection'
+//}
+
+// Инициализация Ини при зациализациягрузке при загрузке DOM
+ DOM
+document.addEventListenerdocument.addEventListener('DOM('DOMContentLoadedContentLoaded', ()', () => => {
+ {
+    const    const mainElements mainElements = [
+ = [
+               ' 'size',size', ' 'colorcolor',', ' 'material',material', 'country 'country', 
+', 
+        '        'shoesshoesGrid',Grid', 'results 'resultsCountCount',', 'apply 'applyFilters',Filters', 'reset 'resetFilters',
+Filters',
+        '        'addSaddShoehoeFormForm', '', 'cancelFormcancelForm', '', 'toggleFormtoggleFormBtn',Btn', 'add 'addShoeSection'
+ShoeSection'
+    ];
     ];
     
-    let allElementsExist = true;
-    mainElements.forEach(elementId => {
-        const element = document.getElementById(elementId);
-        if (!element) {
-            console.error(`Элемент с id "${elementId}" не найден в DOM`);
-            allElementsExist = false;
+       
+    let all let allElementsExistElementsExist = true = true;
+   ;
+    mainElements mainElements.forEach(element.forEach(elementIdId => => {
+        {
+        const element const element = document.getElementById(element = documentId);
+.getElementById(element        ifId);
+ (!element        if (!element) {
+) {
+            console            console.error(`.error(`ЭлемЭлемент сент с id "${ id "${elementIdelementId}" не}" не найден найден в DOM в DOM`);
+           `);
+            allElements allElementsExist =Exist = false;
+ false;
+        }
         }
     });
+    });
     
-    if (!allElementsExist) {
-        console.error('Не все необходимые элементы найдены в DOM');
+       
+    if (! if (!allElementsallElementsExist)Exist) {
+        {
+        console.error console.error('Не('Не все необходим все необходимые элементыые элементы найдены найдены в DOM в DOM');
+       ');
         return;
+ return;
+    }
     }
     
-    loadShoesFromFirebase();
+       
+    load loadShoesFromFirebase();
+ShoesFromFirebase();
     
-    document.getElementById('applyFilters').addEventListener('click', applyFilters);
-    document.getElementById('resetFilters').addEventListener('click', resetFilters);
-    document.getElementById('addShoeForm').addEventListener('submit', handleFormSubmit);
-    document.getElementById('cancelForm').addEventListener('click', () => {
-        document.getElementById('addShoeForm').reset();
-        showMessage('Форма очищена', 'success');
+    document.getElementById('applyFilters    
+    document.getElementById('applyFilters').add').addEventListener('EventListener('click',click', applyFilters applyFilters);
+   );
+    document.getElementById document.getElementById('reset('resetFilters').Filters').addEventListeneraddEventListener('('clickclick', reset', resetFilters);
+Filters);
+       document document.getElementById('.getElementById('addSaddShoeFormhoeForm').add').addEventListener('EventListener('submit',submit', handleForm handleFormSubmit);
+Submit);
+    document    document.getElementById('.getElementById('cancelFormcancelForm').add').addEventListener('EventListener('click',click', () => () => {
+        {
+        document.getElementById document.getElementById('addShoe('addShoeForm').Form').reset();
+reset();
+        show        showMessage('Message('ФормаФорма очищ очищена',ена', ' 'successsuccess');
+   ');
     });
-    document.getElementById('toggleFormBtn').addEventListener('click', toggleFormVisibility);
+    });
+    document.getElementById document.getElementById('('toggletoggleFormBtnFormBtn').add').addEventListener('EventListener('click',click', toggleFormVisibility);
 
-    onSnapshot(collection(db, "shoes"), (snapshot) => {
-        console.log('Real-time update received');
-        loadShoesFromFirebase();
+ toggleFormVisibility);
+
+    //    // На Настройка realстройка real-time об-time обновленийновлений
+   
+    onSnapshot onSnapshot(collection(collection(db(db, "sh, "shoes"),oes"), (sn (snapshot)apshot) => {
+ => {
+        console        console.log('.log('Real-timeReal-time update received');
+        update received');
+        loadS loadShoeshoesFromFireFromFirebase();
     });
 });
