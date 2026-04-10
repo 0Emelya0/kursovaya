@@ -13,7 +13,7 @@ const firebaseConfig = {
 
 // Инициализация Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app); // ✅ Добавлена инициализация db
+const db = getFirestore(app);
 
 let shoesDatabase = [];
 
@@ -65,6 +65,7 @@ function loadLocalShoes() {
 
 async function addShoeToFirebase(shoeData) {
     try {
+        console.log('Попытка добавления обуви:', shoeData);
         const docRef = await addDoc(collection(db, "shoes"), shoeData);
         console.log('Обувь добавлена с ID:', docRef.id);
         showMessage('Обувь успешно добавлена!', 'success');
@@ -78,7 +79,10 @@ async function addShoeToFirebase(shoeData) {
 
 function showMessage(message, type) {
     const messageEl = document.getElementById('formMessage');
-    if (!messageEl) return;
+    if (!messageEl) {
+        console.error('Элемент formMessage не найден');
+        return;
+    }
     
     messageEl.textContent = message;
     messageEl.className = `form-message ${type}`;
@@ -108,7 +112,6 @@ function populateFilters() {
         return;
     }
 
-    // Очищаем все select, оставляя первый option "Все..."
     [sizeSelect, colorSelect, materialSelect, countrySelect].forEach(select => {
         const defaultOption = select.querySelector('option[value=""]');
         select.innerHTML = '';
@@ -193,7 +196,6 @@ function displayShoes(shoes) {
         
         const badge = shoe.badge ? `<div class="shoe-badge">${shoe.badge}</div>` : '';
         
-        // Исправлен обработчик onerror
         const fallbackImage = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23f5f5f5' width='200' height='200'/%3E%3Ctext fill='%23999' font-family='Arial' font-size='14' x='100' y='100' text-anchor='middle' dominant-baseline='middle'%3E${encodeURIComponent(shoe.name.substring(0, 20))}%3C/text%3E%3C/svg%3E`;
         
         shoeCard.innerHTML = `
@@ -210,264 +212,209 @@ function displayShoes(shoes) {
                     <span class="shoe-detail">${shoe.country}</span>
                 </div>
             </div>
- `        `;
+        `;
         
-;
-        
-        shoes        shoesGrid.appendChildGrid.appendChild(shoe(shoeCard);
-Card);
-    });
+        shoesGrid.appendChild(shoeCard);
     });
 }
 
-function}
-
-function applyFilters applyFilters() {
-() {
-    const    const sizeSelect sizeSelect = document.getElementById(' = document.getElementById('size');
-size');
-    const colorSelect    const colorSelect = document = document.getElementById('.getElementById('color');
-color');
-       const const materialSelect materialSelect = document = document.getElementById('.getElementById('material');
-material');
-    const    const countrySelect countrySelect = document.getElementById(' = documentcountry');
-.getElementById('    
-   country');
- if (!    
-    if (!sizeSelectsizeSelect || ! || !colorSelectcolorSelect || ! ||materialSelect !materialSelect || ! ||country !countrySelectSelect) {
-) {
-        console        console.error('.error('ОдинОдин или несколько или несколько элементов select элементов select не найд не найдены вены в DOM');
- DOM');
-        return        return;
-   ;
-    }
+function applyFilters() {
+    const sizeSelect = document.getElementById('size');
+    const colorSelect = document.getElementById('color');
+    const materialSelect = document.getElementById('material');
+    const countrySelect = document.getElementById('country');
     
- }
-    
-    const    const selectedSize selectedSize = size = sizeSelect.valueSelect.value;
-   ;
-    const selected const selectedColor =Color = colorSelect colorSelect.value;
-.value;
-    const    const selectedMaterial selectedMaterial = material = materialSelect.valueSelect.value;
-   ;
-    const selected const selectedCountry =Country = countrySelect countrySelect.value;
-
-.value;
-
-    const    const filteredS filteredShoeshoes = shoes = shoesDatabase.filterDatabase.filter(shoe(shoe => {
- => {
-        return        return (!selectedSize || shoe.size == selectedSize) &&
-               (!selectedColor || shoe.color === selectedColor) &&
-               (!selectedMaterial || shoe.m (!selectedSize || shoe.size == selectedSize) &&
-               (!selectedColor || shoe.color === selectedColor) &&
-               (!selectedMaterial || shoe.materialaterial === === selectedMaterial selectedMaterial) &&
-) &&
-                             (!selectedCountry (!selectedCountry || shoe || shoe.country.country === selected ===Country);
- selectedCountry);
-       });
-
- });
-
-    display    displayShoShoes(filteres(filteredSedShoeshoes);
-}
-
-);
-}
-
-function resetfunction resetFilters()Filters() {
-    {
-    const sizeSelect = document.getElementById const sizeSelect = document.getElementById('size('size');
-   ');
-    const color const colorSelect =Select = document.getElementById document.getElementById('('colorcolor');
-    const materialSelect = document.getElementById');
-    const materialSelect = document.getElementById('material('material');
-   ');
-    const country const countrySelect = document.getElementByIdSelect = document.getElementById('country('country');
-    
-');
-    
-    if    if (!size (!sizeSelect ||Select !color ||Select || !colorSelect || !material !materialSelect || !countrySelectSelect || !countrySelect)) {
-        {
-        console.error('О console.error('Один илидин или несколько элементов несколько элементов select select не не найдены найдены в DOM в DOM');
-       ');
+    if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+        console.error('Один или несколько элементов select не найдены в DOM');
         return;
- return;
-    }
     }
     
-       
-    sizeSelect sizeSelect.value =.value = '';
-    '';
-    colorSelect colorSelect.value =.value = '';
-    '';
-    materialSelect materialSelect.value =.value = '';
-    '';
-    countrySelect countrySelect.value =.value = '';
- '';
-    
-    
-    display    displayShoShoes(shes(shoesDatabaseoesDatabase);
-}
+    const selectedSize = sizeSelect.value;
+    const selectedColor = colorSelect.value;
+    const selectedMaterial = materialSelect.value;
+    const selectedCountry = countrySelect.value;
 
-);
-}
-
-function handlefunction handleFormSubmitFormSubmit(event)(event) {
-    {
-    event.preventDefault event.preventDefault();
-();
-    
-    
-    const    const formData formData = new = new FormData FormData(event.target(event.target);
-   );
-    const shoe const shoeData =Data = {
-        {
-        name: name: formData formData.get('.get('name'),
-name'),
-        size        size: parseInt(formData: parseInt(formData.get('.get('size')),
-size')),
-        color        color: form: formData.getData.get('color('color'),
-       '),
-        material: material: formData formData.get('.get('material'),
-        countrymaterial'),
-        country: form: formDataData.get.get('country('country'),
-       '),
-        badge: badge: formData formData.get('.get('badgebad') ||ge '',
-       ') || image '',
-       : image: formData formData.get('.get('image')
-image')
-    };
-
-    };
-
-    if    if (!shoeData.name (!shoe || !Data.nameshoeData || !shoeData.size ||.size || !shoe !shoeData.colorData.color || ! || !shoeDatashoeData.material.material || ! || !shoeDatashoeData.country.country || ! || !shoeDatashoeData.image).image) {
-        {
-        showMessage('П showMessage('Пожалуйста, заполнитеожалуйста, заполните все обяза все обязательные полятельные поля', '', 'error');
-error');
-        return        return;
-   ;
-    }
-
-    }
-
-    add addSShoehoeToToFirebaseFirebase(shoe(shoeData).Data).then(sthen(success =>uccess => {
-        {
-        if ( if (success)success) {
-            {
-            event.target event.target.reset();
-.reset();
-            load            loadShoShoesFromesFromFirebaseFirebase();
-       ();
-        }
-    }
+    const filteredShoes = shoesDatabase.filter(shoe => {
+        return (!selectedSize || shoe.size == selectedSize) &&
+               (!selectedColor || shoe.color === selectedColor) &&
+               (!selectedMaterial || shoe.material === selectedMaterial) &&
+               (!selectedCountry || shoe.country === selectedCountry);
     });
+
+    displayShoes(filteredShoes);
 }
 
- });
-}
-
-function togglefunction toggleFormVisibilityFormVisibility() {
-() {
-    const    const formSection formSection = document = document.getElementById('.getElementById('addSaddShoeSectionhoeSection');
-   ');
-    const toggle const toggleBtnBtn = document.getElementById = document.getElementById('toggle('FormBtntoggleFormBtn');
+function resetFilters() {
+    const sizeSelect = document.getElementById('size');
+    const colorSelect = document.getElementById('color');
+    const materialSelect = document.getElementById('material');
+    const countrySelect = document.getElementById('country');
     
-');
-    if    
-    if (!form (!formSection ||Section || !toggle !toggleBtn)Btn) return;
- return;
-    
-       
-    if ( if (formSectionformSection.style.display === '.style.displaynone === '') {
-       none') {
-        formSection formSection.style.display = '.style.display = 'blockblock';
-        toggle';
-        toggleBtn.textBtn.textContent =Content = 'С 'Скрытькрыть форму добав форму добавления';
-ления';
-    }    } else else {
- {
-               formSection.style form.display =Section.style.display = 'none';
-        'none';
-        toggleBtn toggleBtn.textContent.textContent = ' = 'ДобаДобавить новвить новую обую обувувь';
-ь';
-    }
-    }
-}
-
-//}
-
-// Инициализация Ини при зациализациягрузке при загрузке DOM
- DOM
-document.addEventListenerdocument.addEventListener('DOM('DOMContentLoadedContentLoaded', ()', () => => {
- {
-    const    const mainElements mainElements = [
- = [
-               ' 'size',size', ' 'colorcolor',', ' 'material',material', 'country 'country', 
-', 
-        '        'shoesshoesGrid',Grid', 'results 'resultsCountCount',', 'apply 'applyFilters',Filters', 'reset 'resetFilters',
-Filters',
-        '        'addSaddShoehoeFormForm', '', 'cancelFormcancelForm', '', 'toggleFormtoggleFormBtn',Btn', 'add 'addShoeSection'
-ShoeSection'
-    ];
-    ];
-    
-       
-    let all let allElementsExistElementsExist = true = true;
-   ;
-    mainElements mainElements.forEach(element.forEach(elementIdId => => {
-        {
-        const element const element = document.getElementById(element = documentId);
-.getElementById(element        ifId);
- (!element        if (!element) {
-) {
-            console            console.error(`.error(`ЭлемЭлемент сент с id "${ id "${elementIdelementId}" не}" не найден найден в DOM в DOM`);
-           `);
-            allElements allElementsExist =Exist = false;
- false;
-        }
-        }
-    });
-    });
-    
-       
-    if (! if (!allElementsallElementsExist)Exist) {
-        {
-        console.error console.error('Не('Не все необходим все необходимые элементыые элементы найдены найдены в DOM в DOM');
-       ');
+    if (!sizeSelect || !colorSelect || !materialSelect || !countrySelect) {
+        console.error('Один или несколько элементов select не найдены в DOM');
         return;
- return;
-    }
     }
     
-       
-    load loadShoesFromFirebase();
-ShoesFromFirebase();
+    sizeSelect.value = '';
+    colorSelect.value = '';
+    materialSelect.value = '';
+    countrySelect.value = '';
     
-    document.getElementById('applyFilters    
-    document.getElementById('applyFilters').add').addEventListener('EventListener('click',click', applyFilters applyFilters);
-   );
-    document.getElementById document.getElementById('reset('resetFilters').Filters').addEventListeneraddEventListener('('clickclick', reset', resetFilters);
-Filters);
-       document document.getElementById('.getElementById('addSaddShoeFormhoeForm').add').addEventListener('EventListener('submit',submit', handleForm handleFormSubmit);
-Submit);
-    document    document.getElementById('.getElementById('cancelFormcancelForm').add').addEventListener('EventListener('click',click', () => () => {
-        {
-        document.getElementById document.getElementById('addShoe('addShoeForm').Form').reset();
-reset();
-        show        showMessage('Message('ФормаФорма очищ очищена',ена', ' 'successsuccess');
-   ');
-    });
-    });
-    document.getElementById document.getElementById('('toggletoggleFormBtnFormBtn').add').addEventListener('EventListener('click',click', toggleFormVisibility);
+    displayShoes(shoesDatabase);
+}
 
- toggleFormVisibility);
+// ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ ОБРАБОТКИ ФОРМЫ
+function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log('Форма отправлена');
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Получаем значения из формы по правильным ID
+    const shoeData = {
+        name: document.getElementById('shoeName')?.value || '',
+        size: parseInt(document.getElementById('shoeSize')?.value) || 0,
+        color: document.getElementById('shoeColor')?.value || '',
+        material: document.getElementById('shoeMaterial')?.value || '',
+        country: document.getElementById('shoeCountry')?.value || '',
+        badge: document.getElementById('shoeBadge')?.value || '',
+        image: document.getElementById('shoeImage')?.value || ''
+    };
+    
+    console.log('Данные формы:', shoeData);
 
-    //    // На Настройка realстройка real-time об-time обновленийновлений
-   
-    onSnapshot onSnapshot(collection(collection(db(db, "sh, "shoes"),oes"), (sn (snapshot)apshot) => {
- => {
-        console        console.log('.log('Real-timeReal-time update received');
-        update received');
-        loadS loadShoeshoesFromFireFromFirebase();
+    // Проверяем заполнение всех полей
+    if (!shoeData.name || !shoeData.size || !shoeData.color || 
+        !shoeData.material || !shoeData.country || !shoeData.image) {
+        showMessage('Пожалуйста, заполните все обязательные поля', 'error');
+        console.log('Не все поля заполнены');
+        return;
+    }
+    
+    // Проверяем размер
+    if (shoeData.size < 35 || shoeData.size > 50) {
+        showMessage('Размер должен быть от 35 до 50', 'error');
+        return;
+    }
+    
+    // Проверяем URL изображения
+    try {
+        new URL(shoeData.image);
+    } catch (e) {
+        showMessage('Введите корректный URL изображения', 'error');
+        return;
+    }
+
+    // Добавляем обувь
+    addShoeToFirebase(shoeData).then(success => {
+        if (success) {
+            form.reset();
+            // Скрываем форму после успешного добавления
+            const formSection = document.getElementById('addShoeSection');
+            const toggleBtn = document.getElementById('toggleFormBtn');
+            if (formSection && toggleBtn) {
+                formSection.style.display = 'none';
+                toggleBtn.textContent = 'Добавить новую обувь';
+            }
+            // Перезагружаем список
+            loadShoesFromFirebase();
+        }
     });
+}
+
+function toggleFormVisibility() {
+    const formSection = document.getElementById('addShoeSection');
+    const toggleBtn = document.getElementById('toggleFormBtn');
+    
+    if (!formSection || !toggleBtn) {
+        console.error('Элементы формы не найдены');
+        return;
+    }
+    
+    if (formSection.style.display === 'none' || formSection.style.display === '') {
+        formSection.style.display = 'block';
+        toggleBtn.textContent = 'Скрыть форму добавления';
+    } else {
+        formSection.style.display = 'none';
+        toggleBtn.textContent = 'Добавить новую обувь';
+    }
+}
+
+// Инициализация при загрузке DOM
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM загружен, инициализация...');
+    
+    // Проверяем наличие всех элементов
+    const elements = {
+        size: document.getElementById('size'),
+        color: document.getElementById('color'),
+        material: document.getElementById('material'),
+        country: document.getElementById('country'),
+        shoesGrid: document.getElementById('shoesGrid'),
+        resultsCount: document.getElementById('resultsCount'),
+        applyFilters: document.getElementById('applyFilters'),
+        resetFilters: document.getElementById('resetFilters'),
+        addShoeForm: document.getElementById('addShoeForm'),
+        cancelForm: document.getElementById('cancelForm'),
+        toggleFormBtn: document.getElementById('toggleFormBtn'),
+        addShoeSection: document.getElementById('addShoeSection')
+    };
+    
+    let allExist = true;
+    for (let [name, element] of Object.entries(elements)) {
+        if (!element) {
+            console.error(`Элемент ${name} не найден`);
+            allExist = false;
+        }
+    }
+    
+    if (!allExist) {
+        console.error('Не все элементы найдены, остановка инициализации');
+        return;
+    }
+    
+    console.log('Все элементы найдены, настройка слушателей...');
+    
+    // Загружаем данные
+    loadShoesFromFirebase();
+    
+    // Настраиваем слушатели событий
+    elements.applyFilters.addEventListener('click', applyFilters);
+    elements.resetFilters.addEventListener('click', resetFilters);
+    
+    // ✅ ВАЖНО: Используем правильный обработчик для формы
+    elements.addShoeForm.addEventListener('submit', handleFormSubmit);
+    
+    elements.cancelForm.addEventListener('click', () => {
+        elements.addShoeForm.reset();
+        showMessage('Форма очищена', 'success');
+    });
+    
+    elements.toggleFormBtn.addEventListener('click', toggleFormVisibility);
+
+    // Настройка real-time обновлений
+    try {
+        onSnapshot(collection(db, "shoes"), (snapshot) => {
+            console.log('Real-time update received');
+            loadShoesFromFirebase();
+        });
+    } catch (error) {
+        console.error('Ошибка настройки real-time обновлений:', error);
+    }
+    
+    console.log('Инициализация завершена');
+});
+
+// ✅ ДОБАВЛЯЕМ ГЛОБАЛЬНЫЙ ОБРАБОТЧИК ДЛЯ ОТЛАДКИ
+window.addEventListener('load', () => {
+    console.log('Страница полностью загружена');
+    
+    // Проверяем форму
+    const form = document.getElementById('addShoeForm');
+    if (form) {
+        console.log('Форма найдена, текущий обработчик:', form.onsubmit);
+    } else {
+        console.error('Форма не найдена при загрузке страницы');
+    }
 });
